@@ -30,8 +30,8 @@ public class ChatController {
         //validateSession(sessionAttributes);
         //validateChatMessage(chatMessage);
 
-        chatMessage.setSender(sessionAttributes.get("userId").toString());
-        chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
+        //chatMessage.setSender(sessionAttributes.get("userId").toString());
+        //chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
 
         messageBrokerService.sendMessage("/topic/chat", chatMessage);
     }
