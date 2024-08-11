@@ -27,8 +27,8 @@ public class ChatController {
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
             @Payload ChatMessage chatMessage
     ) {
-        validateSession(sessionAttributes);
-        validateChatMessage(chatMessage);
+        //validateSession(sessionAttributes);
+        //validateChatMessage(chatMessage);
 
         chatMessage.setSender(sessionAttributes.get("userId").toString());
         chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
