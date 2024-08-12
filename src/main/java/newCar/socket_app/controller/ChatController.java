@@ -32,7 +32,12 @@ public class ChatController {
 
         //chatMessage.setSender(sessionAttributes.get("userId").toString());
         //chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
-        chatMessage.setSender("junha");
+        if(chatMessage.getSender() == null){
+            chatMessage.setSender("junha");
+        }
+        if(chatMessage.getTeam() == null){
+            chatMessage.setTeam(Team.TRAVEL.name());
+        }
 
         messageBrokerService.sendMessage("/topic/chat", chatMessage);
     }
