@@ -1,0 +1,21 @@
+{
+  "Socket-Application-API" : "ec2-3-39-67-88.ap-northeast-2.compute.amazonaws.com:8081",
+  "Socket-Upgrade-Endpoint" : "/ws",
+  "Chat-Subscribe-Endpoint" : "/topic/chat",
+  "Chat-Publish-Endpoint" : "/app/chat.sendMessage",
+  "Chat-Message" : [
+    {
+      "sender" : {
+        "description" : "발신자 명. Jwt 토큰인증이 구현된 이후에는 삭제해야한다.",
+        "default" : "junha"
+      },
+      "team" : {
+        "description" : "팀 명. Jwt 토큰인증이 구현된 이후에는 삭제해야한다.",
+        "default" : "TRAVEL"
+      },
+      "content" : {
+        "description" : "메시지 본문"
+      }
+    }
+  ]
+}
