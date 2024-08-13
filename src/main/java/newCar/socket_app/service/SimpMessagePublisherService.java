@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SimpMessageBrokerService implements MessageBrokerService {
+public class SimpMessagePublisherService implements MessagePublisherService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
     @Override
-    public void sendMessage(String topic, ChatMessage message) {
+    public void publish(String topic, ChatMessage message) {
         messagingTemplate.convertAndSend(topic, message);
     }
 }

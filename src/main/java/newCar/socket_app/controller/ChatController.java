@@ -7,7 +7,7 @@ import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.ChatMessage;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.MessageBrokerService;
+import newCar.socket_app.service.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final MessageBrokerService messageBrokerService;
+    private final MessagePublisherService messagePublisherService;
 
     // client -> /app/chat.sendMessage
     @MessageMapping("/chat.sendMessage")
@@ -39,7 +39,7 @@ public class ChatController {
             chatMessage.setTeam(Team.TRAVEL.name());
         }
 
-        messageBrokerService.sendMessage("/topic/chat", chatMessage);
+        messagePublisherService.publish("/topic/chat", chatMessage);
     }
 
     private void validateSession(Map<String, Object> sessionAttributes) {
