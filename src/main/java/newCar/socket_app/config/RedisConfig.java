@@ -23,6 +23,9 @@ public class RedisConfig {
     @Value("${spring.data.redis.host}")
     private String redisHost;
 
+    @Value("${spring.data.redis.password}")
+    private String redisPassword;
+
     @Value("${spring.data.redis.port}")
     private int redisPort;
 
@@ -47,6 +50,7 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
         redisConfig.setHostName(redisHost);
         redisConfig.setPort(redisPort);
+        redisConfig.setPassword(redisPassword);
         JedisClientConfiguration clientConfig = JedisClientConfiguration.builder()
                 .connectTimeout(timeout)
                 .usePooling()
