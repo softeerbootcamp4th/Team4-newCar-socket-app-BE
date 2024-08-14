@@ -35,6 +35,12 @@ public class ChatController {
         //ChatMessage chatMessage = new ChatMessage(chatMessageReceived);
         //chatMessage.setId(sessionAttributes.get("id").toString());
         //chatMessage.setTeam(((Team)sessionAttributes.get("team")).getCode());
+        if(chatMessageReceived.getSender() == null){
+            chatMessageReceived.setSender("junha");
+        }
+        if(chatMessageReceived.getTeam() == null){
+            chatMessageReceived.setTeam(Team.TRAVEL.getCode());
+        }
 
         messagePublisherService.publish("/topic/chat", chatMessageReceived);
     }
