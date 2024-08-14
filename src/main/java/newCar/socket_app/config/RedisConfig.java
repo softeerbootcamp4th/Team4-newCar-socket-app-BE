@@ -1,5 +1,7 @@
 package newCar.socket_app.config;
 
+import jakarta.annotation.PostConstruct;
+import newCar.socket_app.model.Team;
 import newCar.socket_app.service.RedisMessageSubscriberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -83,4 +85,5 @@ public class RedisConfig {
     MessageListenerAdapter listenerAdapter(RedisMessageSubscriberService subscriberService) {
         return new MessageListenerAdapter(subscriberService);
     }
+
 }

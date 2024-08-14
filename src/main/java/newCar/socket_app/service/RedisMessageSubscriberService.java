@@ -17,7 +17,8 @@ public class RedisMessageSubscriberService implements MessageListener {
         String channel = new String(pattern);
         String body = new String(message.getBody());
         System.out.println("Receive Message from topic : " + channel);
-        System.out.println("message : " + body);
+        System.out.println("message : " + message);
+        System.out.println("body : " + body);
 
         messagingTemplate.convertAndSend(channel, body);
     }

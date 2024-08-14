@@ -1,11 +1,13 @@
 package newCar.socket_app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
 import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.ChatMessage;
+import newCar.socket_app.model.ChatMessageReceived;
 import newCar.socket_app.model.Team;
 import newCar.socket_app.service.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
@@ -25,21 +27,16 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
-            @Payload ChatMessage chatMessage
+            @Payload ChatMessage chatMessageReceived   //test!!!!
     ) {
         //validateSession(sessionAttributes);
-        //validateChatMessage(chatMessage);
+        //validateChatMessage(chatMessageReceived);
 
-        //chatMessage.setSender(sessionAttributes.get("userId").toString());
-        //chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
-        if(chatMessage.getSender() == null){
-            chatMessage.setSender("junha");
-        }
-        if(chatMessage.getTeam() == null){
-            chatMessage.setTeam(Team.TRAVEL.name());
-        }
+        //ChatMessage chatMessage = new ChatMessage(chatMessageReceived);
+        //chatMessage.setId(sessionAttributes.get("id").toString());
+        //chatMessage.setTeam(((Team)sessionAttributes.get("team")).getCode());
 
-        messagePublisherService.publish("/topic/chat", chatMessage);
+        messagePublisherService.publish("/topic/chat", chatMessageReceived);
     }
 
     private void validateSession(Map<String, Object> sessionAttributes) {
@@ -51,7 +48,7 @@ public class ChatController {
         }
     }
 
-    private void validateChatMessage(ChatMessage chatMessage) {
+    private void validateChatMessage(ChatMessageReceived chatMessage) {
         if(chatMessage == null){
             throw new ChatMessageNotFoundException("메시지 규격이 올바르지 않습니다.");
         }

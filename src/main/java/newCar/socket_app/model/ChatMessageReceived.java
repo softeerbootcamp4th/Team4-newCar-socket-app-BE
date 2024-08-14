@@ -8,13 +8,11 @@ import java.io.Serializable;
 
 @Getter @Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-public class ChatMessage implements Serializable {
-    //test!!!! private String id;
+public class ChatMessageReceived implements Serializable {
+    /***for test***/
     private String sender;
-    private String content;
     private String team;
+    /*****/
 
-    public ChatMessage(ChatMessageReceived chatMessageReceived) {
-        this.content = chatMessageReceived.getContent();
-    }
+    private String content;
 }

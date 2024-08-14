@@ -1,0 +1,29 @@
+package newCar.socket_app.model;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
+public class GameState {
+    private Long P; //PET
+    private Long T; //TRAVEL
+    private Long S; //SPACE
+    private Long L; //LEISURE
+
+    public Long getGameState(Team team){
+        return switch (team){
+            case PET -> P;
+            case TRAVEL -> T;
+            case SPACE -> S;
+            case LEISURE -> L;
+        };
+    }
+
+    public void setGameState(Team team, Long value){
+        switch (team){
+            case PET -> P = value;
+            case TRAVEL -> T = value;
+            case SPACE -> S = value;
+            case LEISURE -> L = value;
+        }
+    }
+}

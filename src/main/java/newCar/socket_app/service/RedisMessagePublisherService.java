@@ -2,6 +2,7 @@ package newCar.socket_app.service;
 
 import lombok.RequiredArgsConstructor;
 import newCar.socket_app.model.ChatMessage;
+import newCar.socket_app.model.ChatMessageReceived;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
