@@ -30,11 +30,11 @@ public class RedisGameStateManager implements GameStateService {
             return;
         }
 
-        Map<String, Long> gameState = new HashMap<>();
-        gameState.put(Team.PET.getCode(), 0L);
-        gameState.put(Team.TRAVEL.getCode(), 0L);
-        gameState.put(Team.SPACE.getCode(), 0L);
-        gameState.put(Team.LEISURE.getCode(), 0L);
+        Map<String, String> gameState = new HashMap<>();
+        gameState.put(Team.PET.getCode(), String.valueOf(0L));
+        gameState.put(Team.TRAVEL.getCode(), String.valueOf(0L));
+        gameState.put(Team.SPACE.getCode(), String.valueOf(0L));
+        gameState.put(Team.LEISURE.getCode(), String.valueOf(0L));
 
         redisTemplate.opsForHash().putAll(redisGameStateKeyString, gameState);
     }
@@ -55,12 +55,15 @@ public class RedisGameStateManager implements GameStateService {
 
         Arrays.stream(Team.values())
                 .forEach(team -> {
-                    Long value = (Long) entries.get(team.getCode());
-                    if (value != null) {
+                    // 가져온 엔트리에서 해당 팀의 값을 문자열로 가져온 후 Long으로 변환
+                    String valueStr = (String) entries.get(team.getCode());
+                    if (valueStr != null) {
+                        Long value = Long.valueOf(valueStr);
                         gameState.setGameState(team, value);
                     }
                 });
 
+        // 메시지 브로커로 gameState 전송
         messagingTemplate.convertAndSend("/topic/game", gameState);
     }
 }
