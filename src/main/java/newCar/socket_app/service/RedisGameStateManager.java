@@ -18,14 +18,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RedisGameStateManager implements GameStateService {
 
-    private final RedisTemplate<String, String> stringRedisTemplate;
+    private final RedisTemplate<String, String> gameStateRedisTemplate;
     private final SimpMessagingTemplate messagingTemplate;
 
     private final String redisGameStateKeyString = "GameState";
 
     @PostConstruct
     public void init() {
-        Boolean isExist = stringRedisTemplate.hasKey(redisGameStateKeyString);
+        Boolean isExist = gameStateRedisTemplate.hasKey(redisGameStateKeyString);
         if (isExist != null && isExist) {
             return;
         }
@@ -36,20 +36,20 @@ public class RedisGameStateManager implements GameStateService {
         gameState.put(Team.SPACE.getCode(), "0");
         gameState.put(Team.LEISURE.getCode(), "0");
 
-        stringRedisTemplate.opsForHash().putAll(redisGameStateKeyString, gameState);
+        gameStateRedisTemplate.opsForHash().putAll(redisGameStateKeyString, gameState);
     }
 
     @Override
     public void updateGameState(GameData gameData) {
         Arrays.stream(Team.values())
                 .filter(team -> gameData.getGameData(team) > 0L)
-                .forEach(team -> stringRedisTemplate.opsForHash().increment("GameState", team.getCode(), gameData.getGameData(team)));
+                .forEach(team -> gameStateRedisTemplate.opsForHash().increment("GameState", team.getCode(), gameData.getGameData(team)));
     }
 
     @Override
     @Scheduled(fixedRate = 1000)
     public void pushGameState() {
-        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(redisGameStateKeyString);
+        Map<Object, Object> entries = gameStateRedisTemplate.opsForHash().entries(redisGameStateKeyString);
 
         GameState gameState = new GameState();
 
