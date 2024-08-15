@@ -2,8 +2,10 @@ package newCar.socket_app.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-public class GameState {
+public class GameState implements Serializable {
     private Long P; //PET
     private Long T; //TRAVEL
     private Long S; //SPACE
