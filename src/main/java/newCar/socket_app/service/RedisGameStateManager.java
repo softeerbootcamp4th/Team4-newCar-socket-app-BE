@@ -31,8 +31,8 @@ public class RedisGameStateManager implements GameStateService {
         }
 
         Map<String, String> gameState = new HashMap<>();
-        gameState.put(Team.PET.getCode(), "0");
-        gameState.put(Team.TRAVEL.getCode(), "0");
+        gameState.put(Team.PET.getCode(), "1");
+        gameState.put(Team.TRAVEL.getCode(), "1");
         gameState.put(Team.SPACE.getCode(), "0");
         gameState.put(Team.LEISURE.getCode(), "0");
 
@@ -49,19 +49,23 @@ public class RedisGameStateManager implements GameStateService {
     @Override
     @Scheduled(fixedRate = 1000)
     public void pushGameState() {
-        Map<Object, Object> entries = gameStateRedisTemplate.opsForHash().entries(redisGameStateKeyString);
+        Map<String, String> entries = (Map<String, String>) (Map) gameStateRedisTemplate.opsForHash().entries(redisGameStateKeyString);
 
         GameState gameState = new GameState();
 
         Arrays.stream(Team.values())
                 .forEach(team -> {
-                    // 가져온 엔트리에서 해당 팀의 값을 문자열로 가져온 후 Long으로 변환
-                    String valueStr = (String) entries.get(team.getCode());
+                    String valueStr = entries.get(team.getCode());
                     if (valueStr != null) {
                         Long value = Long.valueOf(valueStr);
                         gameState.setGameState(team, value);
                     }
                 });
+
+        System.out.println(gameState.getGameState(Team.PET));
+        System.out.println(gameState.getGameState(Team.TRAVEL));
+        System.out.println(gameState.getGameState(Team.SPACE));
+        System.out.println(gameState.getGameState(Team.LEISURE));
 
         // 메시지 브로커로 gameState 전송
         messagingTemplate.convertAndSend("/topic/game", gameState);

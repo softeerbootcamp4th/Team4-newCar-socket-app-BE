@@ -16,8 +16,8 @@ public class RedisMessagePublisherService implements MessagePublisherService {
 
     @Override
     public void publish(String topic, ChatMessage message) {
-        System.out.println("publish to topic : " + topic);
-        System.out.println("message : " + message);
+        //System.out.println("publish to topic : " + topic);
+        //System.out.println("message : " + message);
         redisTemplate.convertAndSend(topic, message);
     }
 }
