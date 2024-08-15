@@ -70,6 +70,17 @@ public class RedisConfig {
         return template;
     }
 
+    @Bean
+    public RedisTemplate<String, String> stringRedisTemplate() {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        return redisTemplate;
+    }
+
 
     @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,

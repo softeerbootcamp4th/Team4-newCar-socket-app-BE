@@ -18,38 +18,38 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RedisGameStateManager implements GameStateService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> stringRedisTemplate;
     private final SimpMessagingTemplate messagingTemplate;
 
     private final String redisGameStateKeyString = "GameState";
 
     @PostConstruct
     public void init() {
-        Boolean isExist = redisTemplate.hasKey(redisGameStateKeyString);
+        Boolean isExist = stringRedisTemplate.hasKey(redisGameStateKeyString);
         if (isExist != null && isExist) {
             return;
         }
 
         Map<String, String> gameState = new HashMap<>();
-        gameState.put(Team.PET.getCode(), String.valueOf(0L));
-        gameState.put(Team.TRAVEL.getCode(), String.valueOf(0L));
-        gameState.put(Team.SPACE.getCode(), String.valueOf(0L));
-        gameState.put(Team.LEISURE.getCode(), String.valueOf(0L));
+        gameState.put(Team.PET.getCode(), "0");
+        gameState.put(Team.TRAVEL.getCode(), "0");
+        gameState.put(Team.SPACE.getCode(), "0");
+        gameState.put(Team.LEISURE.getCode(), "0");
 
-        redisTemplate.opsForHash().putAll(redisGameStateKeyString, gameState);
+        stringRedisTemplate.opsForHash().putAll(redisGameStateKeyString, gameState);
     }
 
     @Override
     public void updateGameState(GameData gameData) {
         Arrays.stream(Team.values())
                 .filter(team -> gameData.getGameData(team) > 0L)
-                .forEach(team -> redisTemplate.opsForHash().increment("GameState", team.getCode(), gameData.getGameData(team)));
+                .forEach(team -> stringRedisTemplate.opsForHash().increment("GameState", team.getCode(), gameData.getGameData(team)));
     }
 
     @Override
     @Scheduled(fixedRate = 1000)
     public void pushGameState() {
-        Map<Object, Object> entries = redisTemplate.opsForHash().entries(redisGameStateKeyString);
+        Map<Object, Object> entries = stringRedisTemplate.opsForHash().entries(redisGameStateKeyString);
 
         GameState gameState = new GameState();
 
