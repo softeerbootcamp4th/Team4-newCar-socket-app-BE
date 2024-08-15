@@ -2,6 +2,7 @@ package newCar.socket_app.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.GameData;
 import newCar.socket_app.model.GameState;
 import newCar.socket_app.model.Team;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RedisGameStateManager implements GameStateService {
@@ -62,10 +64,10 @@ public class RedisGameStateManager implements GameStateService {
                     }
                 });
 
-        System.out.println(gameState.getGameState(Team.PET));
-        System.out.println(gameState.getGameState(Team.TRAVEL));
-        System.out.println(gameState.getGameState(Team.SPACE));
-        System.out.println(gameState.getGameState(Team.LEISURE));
+        log.info("PET : " + gameState.getGameState(Team.PET));
+        log.info("TRAVEL : " + gameState.getGameState(Team.TRAVEL));
+        log.info("SPACE : " + gameState.getGameState(Team.SPACE));
+        log.info("LEISURE : " + gameState.getGameState(Team.LEISURE));
 
         // 메시지 브로커로 gameState 전송
         messagingTemplate.convertAndSend("/topic/game", gameState);
