@@ -64,11 +64,6 @@ public class RedisGameStateManager implements GameStateService {
                     }
                 });
 
-        log.info("PET : " + gameState.getGameState(Team.PET));
-        log.info("TRAVEL : " + gameState.getGameState(Team.TRAVEL));
-        log.info("SPACE : " + gameState.getGameState(Team.SPACE));
-        log.info("LEISURE : " + gameState.getGameState(Team.LEISURE));
-
         // 메시지 브로커로 gameState 전송
         messagingTemplate.convertAndSend("/topic/game", gameState);
     }
