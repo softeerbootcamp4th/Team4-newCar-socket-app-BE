@@ -5,12 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Team {
-    PET("P"),
-    TRAVEL("T"),
-    SPACE("S"),
-    LEISURE("L");
+public enum MessageType {
+    NOTICE("N"),
+    BLOCK("B"),
+    MESSAGE("M");
 
     private final String code;
 }
-

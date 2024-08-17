@@ -1,13 +1,15 @@
 package newCar.socket_app.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
 import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.ChatMessage;
+import newCar.socket_app.model.ChatMessageReceived;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.MessageBrokerService;
+import newCar.socket_app.service.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,21 +21,28 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final MessageBrokerService messageBrokerService;
+    private final MessagePublisherService messagePublisherService;
 
     // client -> /app/chat.sendMessage
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
-            @Payload ChatMessage chatMessage
+            @Payload ChatMessage chatMessageReceived   //test!!!!
     ) {
-        validateSession(sessionAttributes);
-        validateChatMessage(chatMessage);
+        //validateSession(sessionAttributes);
+        //validateChatMessage(chatMessageReceived);
 
-        chatMessage.setSender(sessionAttributes.get("userId").toString());
-        chatMessage.setTeam(((Team)sessionAttributes.get("team")).name());
+        //ChatMessage chatMessage = new ChatMessage(chatMessageReceived);
+        //chatMessage.setId(sessionAttributes.get("id").toString());
+        //chatMessage.setTeam(((Team)sessionAttributes.get("team")).getCode());
+        if(chatMessageReceived.getSender() == null){
+            chatMessageReceived.setSender("junha");
+        }
+        if(chatMessageReceived.getTeam() == null){
+            chatMessageReceived.setTeam(Team.TRAVEL.getCode());
+        }
 
-        messageBrokerService.sendMessage("/topic/chat", chatMessage);
+        messagePublisherService.publish("/topic/chat", chatMessageReceived);
     }
 
     private void validateSession(Map<String, Object> sessionAttributes) {
@@ -45,7 +54,7 @@ public class ChatController {
         }
     }
 
-    private void validateChatMessage(ChatMessage chatMessage) {
+    private void validateChatMessage(ChatMessageReceived chatMessage) {
         if(chatMessage == null){
             throw new ChatMessageNotFoundException("메시지 규격이 올바르지 않습니다.");
         }

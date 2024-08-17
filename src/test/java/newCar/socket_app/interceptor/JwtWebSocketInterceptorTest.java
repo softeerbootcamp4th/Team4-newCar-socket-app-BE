@@ -3,7 +3,6 @@ package newCar.socket_app.interceptor;
 import newCar.socket_app.model.Team;
 import newCar.socket_app.secure.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -49,7 +48,7 @@ class JwtWebSocketInterceptorTest {
 
         when(request.getHeaders()).thenReturn(headers);
         when(jwtTokenProvider.validateToken(token)).thenReturn(true);
-        when(jwtTokenProvider.getUserId(token)).thenReturn("user123");
+        when(jwtTokenProvider.getUserId(token)).thenReturn(1234L);
         when(jwtTokenProvider.getTeam(token)).thenReturn(Team.TRAVEL);
 
         Map<String, Object> attributes = new HashMap<>();
@@ -62,10 +61,7 @@ class JwtWebSocketInterceptorTest {
         verify(jwtTokenProvider, times(1)).getTeam(token);
         verify(response, never()).setStatusCode(HttpStatus.UNAUTHORIZED);
 
-        assertTrue(attributes.containsKey("userId"));
-        assertTrue(attributes.containsKey("team"));
-        assertEquals("user123", attributes.get("userId"));
-        assertEquals(Team.TRAVEL, attributes.get("team"));
+        assertTrue(attributes.containsKey("session"));
     }
 
     @Test

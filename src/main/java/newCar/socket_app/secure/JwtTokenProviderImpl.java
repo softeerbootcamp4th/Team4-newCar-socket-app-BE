@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Override
-    public String getUserId(String token) {
-        return "junha";
+    public Long getUserId(String token) {
+        return 1234L;
     }
 
     @Override
