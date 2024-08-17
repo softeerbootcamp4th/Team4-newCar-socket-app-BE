@@ -30,19 +30,19 @@
       "Game-Publish-Endpoint" : "/app/game.sendGameData",
       "Game-Data" : [
         {
-          "P" : {
+          "p" : {
             "type" : "int",
             "description" : "Client : PET 팀 버튼 클릭 횟수, Server : PET 팀 총 클릭 횟수"
           },
-          "T" : {
+          "t" : {
             "type" : "int",
             "description" : "Client : TRAVEL 팀 버튼 클릭 횟수, Server : TRAVEL 팀 총 클릭 횟수"
           },
-          "S" : {
+          "s" : {
             "type" : "int",
             "description" : "Client : SPACE 팀 버튼 클릭 횟수, Server : SPACE 팀 총 클릭 횟수"
           },
-          "L" : {
+          "l" : {
             "type" : "int",
             "description" : "Client : LEISURE 팀 버튼 클릭 횟수, Server : LEISURE 팀 총 클릭 횟수"
           }

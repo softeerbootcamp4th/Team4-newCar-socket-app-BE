@@ -1,10 +1,11 @@
-package newCar.socket_app.secure;
+package newCar.socket_app.service.secure;
 
 import newCar.socket_app.model.Team;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class JwtTokenProviderImpl implements JwtTokenProvider {
+@Service
+public class TestJwtTokenProvider implements JwtTokenProvider {
     @Override
     public Long getUserId(String token) {
         return 1234L;
@@ -18,5 +19,10 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
     @Override
     public boolean validateToken(String token) {
         return true;
+    }
+
+    @Override
+    public boolean validateAdminToken(String token) {
+        return false;
     }
 }

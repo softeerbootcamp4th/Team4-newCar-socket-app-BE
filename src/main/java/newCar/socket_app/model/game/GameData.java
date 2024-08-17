@@ -1,7 +1,8 @@
-package newCar.socket_app.model;
+package newCar.socket_app.model.game;
 
 import lombok.Getter;
 import lombok.Setter;
+import newCar.socket_app.model.Team;
 
 @Getter @Setter
 public class GameData {

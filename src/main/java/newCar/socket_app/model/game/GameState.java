@@ -1,10 +1,11 @@
-package newCar.socket_app.model;
+package newCar.socket_app.model.game;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import newCar.socket_app.model.Team;
 
 import java.io.Serializable;
 

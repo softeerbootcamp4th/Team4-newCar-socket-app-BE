@@ -1,10 +1,10 @@
-package newCar.socket_app.service;
+package newCar.socket_app.service.game;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import newCar.socket_app.model.GameData;
-import newCar.socket_app.model.GameState;
+import newCar.socket_app.model.game.GameData;
+import newCar.socket_app.model.game.GameState;
 import newCar.socket_app.model.Team;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -33,8 +33,8 @@ public class RedisGameStateManager implements GameStateService {
         }
 
         Map<String, String> gameState = new HashMap<>();
-        gameState.put(Team.PET.getCode(), "1");
-        gameState.put(Team.TRAVEL.getCode(), "1");
+        gameState.put(Team.PET.getCode(), "0");
+        gameState.put(Team.TRAVEL.getCode(), "0");
         gameState.put(Team.SPACE.getCode(), "0");
         gameState.put(Team.LEISURE.getCode(), "0");
 
@@ -64,7 +64,6 @@ public class RedisGameStateManager implements GameStateService {
                     }
                 });
 
-        // 메시지 브로커로 gameState 전송
         messagingTemplate.convertAndSend("/topic/game", gameState);
     }
 }

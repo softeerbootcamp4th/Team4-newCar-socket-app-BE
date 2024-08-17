@@ -2,7 +2,7 @@ name: Deploy To EC2
 
 on:
   push:
-    branches: [ "main", "deployTest" ]
+    branches: [ "main", "TASK-240--jwtAuth" ]
 
 jobs:
   deploy:
