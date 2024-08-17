@@ -1,7 +1,7 @@
 package newCar.socket_app.service.message;
 
 import lombok.RequiredArgsConstructor;
-import newCar.socket_app.model.ChatMessage;
+import newCar.socket_app.model.chat.ChatMessage;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 

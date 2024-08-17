@@ -1,7 +1,7 @@
 package newCar.socket_app.controller;
 
 import lombok.RequiredArgsConstructor;
-import newCar.socket_app.model.GameData;
+import newCar.socket_app.model.game.GameData;
 import newCar.socket_app.service.game.GameStateService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;

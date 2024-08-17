@@ -1,4 +1,4 @@
-package newCar.socket_app.model;
+package newCar.socket_app.model.chat;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;

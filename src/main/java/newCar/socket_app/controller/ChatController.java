@@ -5,10 +5,8 @@ import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
 import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
-import newCar.socket_app.model.ChatMessage;
-import newCar.socket_app.model.ChatMessageReceived;
-import newCar.socket_app.model.Team;
-import newCar.socket_app.model.session.AdminSession;
+import newCar.socket_app.model.chat.ChatMessage;
+import newCar.socket_app.model.chat.ChatMessageReceived;
 import newCar.socket_app.model.session.Session;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.MessagePublisherService;
@@ -29,41 +27,33 @@ public class ChatController {
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
-            @Payload ChatMessage chatMessageReceived   //test!!!!
+            @Payload ChatMessageReceived chatMessageReceived
     ) {
-        validateSession(sessionAttributes);
-        //validateChatMessage(chatMessageReceived);
+        validateUserSession(sessionAttributes);
+        validateChatMessage(chatMessageReceived);
 
-        //ChatMessage chatMessage = new ChatMessage(chatMessageReceived);
-        //chatMessage.setId(sessionAttributes.get("id").toString());
-        //chatMessage.setTeam(((Team)sessionAttributes.get("team")).getCode());
-        if(chatMessageReceived.getSender() == null){
-            chatMessageReceived.setSender("junha");
-        }
-        if(chatMessageReceived.getTeam() == null){
-            chatMessageReceived.setTeam(Team.TRAVEL.getCode());
-        }
+        UserSession session = (UserSession) sessionAttributes.get("session");
 
-        messagePublisherService.publish("/topic/chat", chatMessageReceived);
+        messagePublisherService.publish("/topic/chat", ChatMessage.from(chatMessageReceived, session));
     }
 
-    private void validateSession(Map<String, Object> sessionAttributes) {
+    private void validateUserSession(Map<String, Object> sessionAttributes) {
         if(sessionAttributes == null || sessionAttributes.isEmpty()){
             throw new SessionNotFoundException("세션이 만료되었거나 존재하지 않습니다. 로그인해 주세요.");
         }
 
         Object session = sessionAttributes.get("session");
-        if(!(session instanceof Session)){
+        if(!(session instanceof UserSession)){
             throw new InvalidSessionException("비정상적인 접근입니다.");
         }
     }
 
-    private void validateChatMessage(ChatMessageReceived chatMessage) {
-        if(chatMessage == null){
+    private void validateChatMessage(ChatMessageReceived chatMessageReceived) {
+        if(chatMessageReceived == null){
             throw new ChatMessageNotFoundException("메시지 규격이 올바르지 않습니다.");
         }
 
-        if(chatMessage.getContent().isEmpty() || chatMessage.getContent().length() > 50){
+        if(chatMessageReceived.getContent().isEmpty() || chatMessageReceived.getContent().length() > 50){
             throw new InvalidChatMessageException("메시지 본문은 공백 포함 50자 이하만 가능합니다.");
         }
     }

@@ -1,6 +1,6 @@
 package newCar.socket_app.service;
 
-import newCar.socket_app.model.GameData;
+import newCar.socket_app.model.game.GameData;
 import newCar.socket_app.model.Team;
 import newCar.socket_app.service.game.RedisGameStateManager;
 import org.junit.jupiter.api.BeforeEach;

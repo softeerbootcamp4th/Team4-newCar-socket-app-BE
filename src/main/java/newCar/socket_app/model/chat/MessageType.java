@@ -1,4 +1,4 @@
-package newCar.socket_app.model;
+package newCar.socket_app.model.chat;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
