@@ -9,6 +9,7 @@ import newCar.socket_app.model.ChatMessage;
 import newCar.socket_app.model.ChatMessageReceived;
 import newCar.socket_app.model.Team;
 import newCar.socket_app.model.session.AdminSession;
+import newCar.socket_app.model.session.Session;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
@@ -52,7 +53,7 @@ public class ChatController {
         }
 
         Object session = sessionAttributes.get("session");
-        if(!(session instanceof UserSession) && !(session instanceof AdminSession)){
+        if(!(session instanceof Session)){
             throw new InvalidSessionException("비정상적인 접근입니다.");
         }
     }
