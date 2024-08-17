@@ -1,6 +1,7 @@
 package newCar.socket_app.interceptor;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.session.AdminSession;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.model.Team;
@@ -13,6 +14,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtWebSocketInterceptor implements HandshakeInterceptor {
@@ -39,6 +41,8 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             Long userId = jwtTokenProvider.getUserId(token);
             Team team = jwtTokenProvider.getTeam(token);
             attributes.put("session", new UserSession(userId, team));
+            log.info("유저 연결 : {}", userId);
+            log.info("팀 : {}", team);
         }
 
         return true;

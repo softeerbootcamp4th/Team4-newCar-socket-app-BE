@@ -1,6 +1,7 @@
 package newCar.socket_app.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
 import newCar.socket_app.exception.InvalidSessionException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ChatController {
@@ -34,6 +36,8 @@ public class ChatController {
 
         UserSession session = (UserSession) sessionAttributes.get("session");
 
+        log.info("인가된 유저의 채팅 : {}", chatMessageReceived.getContent());
+        log.info("인가된 유저 세션 : {}", session);
         messagePublisherService.publish("/topic/chat", ChatMessage.from(chatMessageReceived, session));
     }
 
