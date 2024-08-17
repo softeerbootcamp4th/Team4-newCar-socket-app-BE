@@ -1,8 +1,8 @@
 package newCar.socket_app.service;
 
 import newCar.socket_app.model.GameData;
-import newCar.socket_app.model.GameState;
 import newCar.socket_app.model.Team;
+import newCar.socket_app.service.game.RedisGameStateManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,9 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

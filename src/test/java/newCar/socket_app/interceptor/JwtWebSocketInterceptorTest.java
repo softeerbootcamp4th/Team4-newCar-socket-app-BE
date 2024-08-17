@@ -1,7 +1,7 @@
 package newCar.socket_app.interceptor;
 
 import newCar.socket_app.model.Team;
-import newCar.socket_app.secure.JwtTokenProvider;
+import newCar.socket_app.service.secure.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

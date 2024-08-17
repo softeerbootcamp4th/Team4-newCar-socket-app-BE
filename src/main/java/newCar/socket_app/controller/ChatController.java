@@ -1,6 +1,5 @@
 package newCar.socket_app.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
@@ -9,7 +8,7 @@ import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.ChatMessage;
 import newCar.socket_app.model.ChatMessageReceived;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.MessagePublisherService;
+import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
