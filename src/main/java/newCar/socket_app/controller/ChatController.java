@@ -8,6 +8,8 @@ import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.ChatMessage;
 import newCar.socket_app.model.ChatMessageReceived;
 import newCar.socket_app.model.Team;
+import newCar.socket_app.model.session.AdminSession;
+import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -28,7 +30,7 @@ public class ChatController {
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
             @Payload ChatMessage chatMessageReceived   //test!!!!
     ) {
-        //validateSession(sessionAttributes);
+        validateSession(sessionAttributes);
         //validateChatMessage(chatMessageReceived);
 
         //ChatMessage chatMessage = new ChatMessage(chatMessageReceived);
@@ -46,9 +48,11 @@ public class ChatController {
 
     private void validateSession(Map<String, Object> sessionAttributes) {
         if(sessionAttributes == null || sessionAttributes.isEmpty()){
-            throw new SessionNotFoundException("세션이 만료되었거나 존재하지 않습니다. 다시 로그인해 주세요.");
+            throw new SessionNotFoundException("세션이 만료되었거나 존재하지 않습니다. 로그인해 주세요.");
         }
-        if(sessionAttributes.get("userId") == null || sessionAttributes.get("team") == null){
+
+        Object session = sessionAttributes.get("session");
+        if(!(session instanceof UserSession) && !(session instanceof AdminSession)){
             throw new InvalidSessionException("비정상적인 접근입니다.");
         }
     }
