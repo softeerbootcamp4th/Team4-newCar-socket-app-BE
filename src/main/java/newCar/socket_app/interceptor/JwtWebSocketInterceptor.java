@@ -29,6 +29,10 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             Map<String, Object> attributes
     ) throws Exception {
         log.info("웹소켓 연결요청 HTTP로 들어옴!!!!!!!!");
+        request.getHeaders().forEach((h, v) -> {
+            log.info("header = {}", h);
+            log.info("value = {}", v);
+        });
         log.info(request.toString());
         String token = request.getHeaders().getFirst("Authorization");
 
