@@ -30,6 +30,10 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
     ) throws Exception {
         String token = request.getHeaders().getFirst("Authorization");
 
+        if (token != null) {
+            log.info("확인된 토큰 : {}", token);
+        }
+
         // WebSocket 연결 시 클라이언트를 식별할 수 있는 고유한 세션을 생성한다. -> 웹소켓 연결 자체가 고유한 세션 식별자로 묶여있다.
         // 클라이언트가 소켓을 통해 보내는 메시지에 세션 식별자를 '명시적으로' 작성하지 않아도 서버는 클라이언트를 식별할 수 있다.
         if (token != null && jwtTokenProvider.validateToken(token)) {
