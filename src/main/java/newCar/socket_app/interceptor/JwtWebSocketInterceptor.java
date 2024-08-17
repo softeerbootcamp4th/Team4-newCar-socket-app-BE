@@ -3,7 +3,7 @@ package newCar.socket_app.interceptor;
 import lombok.RequiredArgsConstructor;
 import newCar.socket_app.model.SocketSession;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.secure.JwtTokenProvider;
+import newCar.socket_app.service.secure.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -26,8 +26,6 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             WebSocketHandler wsHandler,
             Map<String, Object> attributes
     ) throws Exception {
-        return true;
-        /*
         String token = request.getHeaders().getFirst("Authorization");
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -36,13 +34,11 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             Long userId = jwtTokenProvider.getUserId(token);
             Team team = jwtTokenProvider.getTeam(token);
 
-            attributes.put("session", new SocketSession(userId, team));
             // 세션에 저장될 속성 초기화. -> 서버 내부에 저장됨.
-            return true;
+            attributes.put("session", new SocketSession(userId, team));
         }
 
-        response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        return false;*/
+        return true;
     }
 
     @Override
