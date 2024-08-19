@@ -3,7 +3,7 @@ package newCar.socket_app.service.secure;
 import newCar.socket_app.model.Team;
 
 
-public interface JwtTokenProvider {
+public interface JwtValidator {
 
     public Long getUserId(String token); //토큰에서 유저 Id를 추출
 

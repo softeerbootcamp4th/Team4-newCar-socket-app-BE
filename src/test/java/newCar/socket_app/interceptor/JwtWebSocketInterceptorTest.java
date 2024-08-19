@@ -1,7 +1,7 @@
 package newCar.socket_app.interceptor;
 
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.secure.JwtTokenProvider;
+import newCar.socket_app.service.secure.JwtValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class JwtWebSocketInterceptorTest {
 
     @Mock
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtValidator jwtTokenProvider;
 
     @Mock
     private ServerHttpRequest request;

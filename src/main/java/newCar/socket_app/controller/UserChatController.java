@@ -1,13 +1,13 @@
 package newCar.socket_app.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.exception.ChatMessageNotFoundException;
 import newCar.socket_app.exception.InvalidChatMessageException;
 import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.chat.ChatMessage;
 import newCar.socket_app.model.chat.ChatMessageReceived;
-import newCar.socket_app.model.session.Session;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
@@ -17,9 +17,10 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-public class ChatController {
+public class UserChatController {
 
     private final MessagePublisherService messagePublisherService;
 
