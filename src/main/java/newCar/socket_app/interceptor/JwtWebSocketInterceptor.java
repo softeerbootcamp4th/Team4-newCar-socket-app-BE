@@ -37,14 +37,19 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
 
         // URI를 통해 쿼리 파라미터를 추출
         String token = null;
+        ServletServerHttpRequest servletRequest;
         if (request instanceof ServletServerHttpRequest) {
-            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-            MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(servletRequest.getURI()).build().getQueryParams();
-
-            // 예: 특정 쿼리 파라미터 'token'의 값을 가져오는 경우
-            token = queryParams.get("Authorization").get(0);
+            servletRequest = (ServletServerHttpRequest) request;
+        } else {
+            return false;
         }
 
+        MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(servletRequest.getURI()).build().getQueryParams();
+        try{
+            token = queryParams.get("Authorization").get(0);
+        } catch (NullPointerException ne){
+            return true;
+        }
 
         if (token != null) {
             log.info("확인된 토큰 : {}", token);
