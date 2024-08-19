@@ -8,10 +8,14 @@ import newCar.socket_app.model.Team;
 import newCar.socket_app.service.secure.JwtTokenProvider;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -28,13 +32,19 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             WebSocketHandler wsHandler,
             Map<String, Object> attributes
     ) throws Exception {
-        /*log.info("웹소켓 연결요청 HTTP로 들어옴!!!!!!!!");
-        request.getHeaders().forEach((h, v) -> {
-            log.info("header = {}", h);
-            log.info("value = {}", v);
-        });
-        log.info(request.toString());*/
-        String token = request.getHeaders().getFirst("Authorization");
+        log.info("웹소켓 연결요청 HTTP로 들어옴!!!!!!!!");
+        //String token = request.getHeaders().getFirst("Authorization");
+
+        // URI를 통해 쿼리 파라미터를 추출
+        String token = null;
+        if (request instanceof ServletServerHttpRequest) {
+            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+            MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(servletRequest.getURI()).build().getQueryParams();
+
+            // 예: 특정 쿼리 파라미터 'token'의 값을 가져오는 경우
+            token = queryParams.get("Authorization").get(0);
+        }
+
 
         if (token != null) {
             log.info("확인된 토큰 : {}", token);
