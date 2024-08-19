@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
@@ -24,11 +25,13 @@ public class AdminChatController {
         this.messagePublisherService = messagePublisherService;
     }
 
-    @MessageMapping("/chat.blockMessage")
+    @MessageMapping("/chat.sendBlock")
     public void blockMessage(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
             @Payload BlockMessage blockMessageReceived
     ) {
+        validateAdminSession(sessionAttributes);
+        blockMessageReceived.generateUniqueId(1L);
         messagePublisherService.publish("/topic/block", blockMessageReceived);
     }
 
@@ -37,6 +40,8 @@ public class AdminChatController {
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
             @Payload NoticeMessage noticeMessageReceived
     ) {
+        validateAdminSession(sessionAttributes);
+        noticeMessageReceived.generateUniqueId(1L);
         messagePublisherService.publish("/topic/notice", noticeMessageReceived);
     }
 
