@@ -8,8 +8,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
