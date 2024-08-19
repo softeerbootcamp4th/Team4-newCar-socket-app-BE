@@ -18,11 +18,11 @@ public class ChatMessage extends Message implements Serializable {
     private String team;
     private String content;
 
-
     public static ChatMessage from(ChatMessageReceived chatMessageReceived, UserSession userSession) {
         ChatMessage chatMessage = new ChatMessage();
 
-        chatMessage.setSender(userSession.getUserId().toString());
+        chatMessage.generateUniqueId(userSession.getAccountId());
+        chatMessage.setSender(userSession.getAccountId().toString());
         chatMessage.setTeam(userSession.getTeam().getCode());
         chatMessage.setContent(chatMessageReceived.getContent());
 

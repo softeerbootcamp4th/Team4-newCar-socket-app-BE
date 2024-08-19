@@ -14,4 +14,8 @@ import java.io.Serializable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 public class Message implements Serializable {
     private String id;
+
+    public void generateUniqueId(Long accountId){
+        this.id = accountId.toString() + System.currentTimeMillis();
+    }
 }

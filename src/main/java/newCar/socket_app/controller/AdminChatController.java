@@ -28,21 +28,21 @@ public class AdminChatController {
     @MessageMapping("/chat.sendBlock")
     public void blockMessage(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
-            @Payload BlockMessage blockMessageReceived
+            @Payload BlockMessage blockMessage
     ) {
         validateAdminSession(sessionAttributes);
-        blockMessageReceived.generateUniqueId(1L);
-        messagePublisherService.publish("/topic/block", blockMessageReceived);
+        blockMessage.generateUniqueId(1L);
+        messagePublisherService.publish("/topic/block", blockMessage);
     }
 
     @MessageMapping("/chat.sendNotice")
     public void sendNotice(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes,
-            @Payload NoticeMessage noticeMessageReceived
+            @Payload NoticeMessage noticeMessage
     ) {
         validateAdminSession(sessionAttributes);
-        noticeMessageReceived.generateUniqueId(1L);
-        messagePublisherService.publish("/topic/notice", noticeMessageReceived);
+        noticeMessage.generateUniqueId(1L);
+        messagePublisherService.publish("/topic/notice", noticeMessage);
     }
 
     private void validateAdminSession(Map<String, Object> sessionAttributes) {
