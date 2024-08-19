@@ -36,8 +36,8 @@ public class ChatController {
 
         UserSession session = (UserSession) sessionAttributes.get("session");
 
-        log.info("인가된 유저의 채팅 : {}", chatMessageReceived.getContent());
-        log.info("인가된 유저 세션 : {}", session);
+        //log.info("인가된 유저의 채팅 : {}", chatMessageReceived.getContent());
+        //log.info("인가된 유저 세션 : {}", session);
         messagePublisherService.publish("/topic/chat", ChatMessage.from(chatMessageReceived, session));
     }
 
