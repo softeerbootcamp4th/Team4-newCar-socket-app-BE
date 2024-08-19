@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-public class NoticeMessage extends Message implements Serializable {
-    private String content;
+public class Message implements Serializable {
+    private String id;
 }
