@@ -13,7 +13,7 @@ import java.security.SignatureException;
 
 @Service @Primary
 @RequiredArgsConstructor
-public class JwtTokenProviderImpl implements JwtTokenProvider{
+public class JwtValidatorImpl implements JwtValidator {
 
     private final JwtConfig jwtConfig;
 

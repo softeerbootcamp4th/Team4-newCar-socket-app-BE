@@ -1,11 +1,10 @@
 package newCar.socket_app.service.secure;
 
 import newCar.socket_app.model.Team;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestJwtTokenProvider implements JwtTokenProvider {
+public class TestJwtValidator implements JwtValidator {
     @Override
     public Long getUserId(String token) {
         return 1234L;

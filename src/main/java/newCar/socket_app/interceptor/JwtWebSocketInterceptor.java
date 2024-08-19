@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.session.AdminSession;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.secure.JwtTokenProvider;
+import newCar.socket_app.service.secure.JwtValidator;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -15,7 +15,6 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -23,7 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtWebSocketInterceptor implements HandshakeInterceptor {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtValidator jwtValidator;
 
     @Override
     public boolean beforeHandshake(
@@ -32,8 +31,6 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             WebSocketHandler wsHandler,
             Map<String, Object> attributes
     ) throws Exception {
-        log.info("웹소켓 연결요청 HTTP로 들어옴!!!!!!!!");
-        //String token = request.getHeaders().getFirst("Authorization");
 
         // URI를 통해 쿼리 파라미터를 추출
         String token = null;
@@ -51,23 +48,17 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             return true;
         }
 
-        if (token != null) {
-            log.info("확인된 토큰 : {}", token);
-        }
-
         // WebSocket 연결 시 클라이언트를 식별할 수 있는 고유한 세션을 생성한다. -> 웹소켓 연결 자체가 고유한 세션 식별자로 묶여있다.
         // 클라이언트가 소켓을 통해 보내는 메시지에 세션 식별자를 '명시적으로' 작성하지 않아도 서버는 클라이언트를 식별할 수 있다.
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            if(jwtTokenProvider.validateAdminToken(token)){
+        if (token != null && jwtValidator.validateToken(token)) {
+            if(jwtValidator.validateAdminToken(token)){
                 attributes.put("session", new AdminSession());
                 return true;
             }
 
-            Long userId = jwtTokenProvider.getUserId(token);
-            Team team = jwtTokenProvider.getTeam(token);
+            Long userId = jwtValidator.getUserId(token);
+            Team team = jwtValidator.getTeam(token);
             attributes.put("session", new UserSession(userId, team));
-            log.info("유저 연결 : {}", userId);
-            log.info("팀 : {}", team);
         }
 
         return true;

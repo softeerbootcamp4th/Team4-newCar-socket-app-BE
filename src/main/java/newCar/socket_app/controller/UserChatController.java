@@ -8,7 +8,6 @@ import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.chat.ChatMessage;
 import newCar.socket_app.model.chat.ChatMessageReceived;
-import newCar.socket_app.model.session.Session;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
@@ -21,7 +20,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class ChatController {
+public class UserChatController {
 
     private final MessagePublisherService messagePublisherService;
 
@@ -36,8 +35,6 @@ public class ChatController {
 
         UserSession session = (UserSession) sessionAttributes.get("session");
 
-        //log.info("인가된 유저의 채팅 : {}", chatMessageReceived.getContent());
-        //log.info("인가된 유저 세션 : {}", session);
         messagePublisherService.publish("/topic/chat", ChatMessage.from(chatMessageReceived, session));
     }
 
