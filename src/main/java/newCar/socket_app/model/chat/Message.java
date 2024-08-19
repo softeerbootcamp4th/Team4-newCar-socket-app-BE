@@ -12,8 +12,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-public class BlockMessage extends Message implements Serializable {
-    private String blockId;
+public class Message implements Serializable {
+    private String id;
+
+    public void generateUniqueId(Long accountId){
+        this.id = accountId.toString() + System.currentTimeMillis();
+    }
 }
-
-

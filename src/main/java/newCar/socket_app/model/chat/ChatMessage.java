@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import newCar.socket_app.model.session.Session;
 import newCar.socket_app.model.session.UserSession;
 
 import java.io.Serializable;
@@ -14,8 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
-public class ChatMessage implements Serializable {
-    //private String id;
+public class ChatMessage extends Message implements Serializable {
     private String sender;
     private String team;
     private String content;
@@ -23,7 +21,8 @@ public class ChatMessage implements Serializable {
     public static ChatMessage from(ChatMessageReceived chatMessageReceived, UserSession userSession) {
         ChatMessage chatMessage = new ChatMessage();
 
-        chatMessage.setSender(userSession.getUserId().toString());
+        chatMessage.generateUniqueId(userSession.getAccountId());
+        chatMessage.setSender(userSession.getAccountId().toString());
         chatMessage.setTeam(userSession.getTeam().getCode());
         chatMessage.setContent(chatMessageReceived.getContent());
 

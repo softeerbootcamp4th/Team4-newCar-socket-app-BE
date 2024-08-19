@@ -1,0 +1,172 @@
+{
+  "Socket-Server-URL" : "https://softeer-team4:8081",
+  "Socket-Upgrade-Endpoint" : "/ws",
+  "Query-Parameters": {
+    "Authorization": "<token_value>",
+    "required": false,
+    "description": "토큰 없이도 서버와 소켓 연결이 가능하지만, 이 경우 관전 모드로만 접속됩니다. 채팅이나 게임에 참여하려면 유효한 토큰을 포함한 소켓 연결을 다시 시도해야 합니다.",
+    "example": "/ws?Authorization=eyJhbGciOiJIUzI1NiJ..."
+  },
+
+  "Chat" : {
+      "Chat-Message": {
+        "Server-to-Client": {
+          "Chat-Subscribe-Endpoint": "/topic/chat",
+          "Message-Format": {
+            "id": {
+              "type": "string",
+              "format": "<user Id>-<publish time Millis>",
+              "example": "123-11724079380012",
+              "description": "유저 123이 11724079380012(1970/01/01 00:00:00 UTC로 부터의 경과시간-밀리초)에 보낸 메시지"
+            },
+            "sender": {
+              "type": "int",
+              "description": "유저 아이디",
+              "example": "123"
+            },
+            "team": {
+              "enum": ["P", "T", "S", "L"],
+              "description": "팀을 나타내는 코드로, 'P', 'T', 'S', 'L' 중 하나의 값만 허용. 각각 PET, TRAVEL, SPACE, LEISURE 팀을 의미함."
+            },
+            "content": {
+              "type": "string",
+              "description": "메시지 본문"
+            }
+          },
+          "Authorization": {
+            "required": false,
+            "description": "서버에서 채팅 메시지를 수신하는 데는 인증이 불필요하다."
+          }
+        },
+
+        "Client-to-Server": {
+          "Chat-Publish-Endpoint": "/app/chat.sendMessage",
+          "Message-Format": {
+            "content": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 50,
+              "description": "메시지 본문으로, 0자에서 최대 50자까지 허용."
+            }
+          },
+          "Authorization": {
+            "required": true,
+            "description": "채팅 메시지는 정당한 토큰을 가진 로그인된 사용자만 보낼 수 있다. 토큰은 소켓 연결 시 쿼리 파라미터를 통해 제공되어야 하며, 인증된 사용자만 메시지를 전송할 수 있다."
+          }
+        }
+      },
+
+      "Block-Message" : {
+        "Server-to-Client": {
+          "Block-Subscribe-Endpoint": "/topic/block",
+          "Message-Format": {
+            "id": {
+              "type": "string",
+              "format": "<Admin Id>-<publish time Millis>",
+              "example": "1-11724079380012",
+              "description": "관리자 ID와 메시지 생성 시간을 조합한 고유 식별자이다. 관리자 ID는 항상 '1'로 고정되어 있다. 이 필드는 시스템에서 자동으로 생성되며, 클라이언트 측에서 특별히 처리할 필요는 없다."
+            },
+            "blockId": {
+              "type": "string",
+              "format": "<user Id>-<publish time Millis>",
+              "example": "123-11724079380012",
+              "description": "검열된 메시지의 ID. 클라이언트는 현재 화면에 표시된 채팅 중에서 이 식별자를 가진 메시지를 찾아, 해당 메시지를 삭제하고 숨김 처리해야한다."
+            }
+          },
+          "Authorization": {
+            "required": false,
+            "description": "서버에서 검열된 메시지를 수신하는 데는 인증이 불필요하다."
+          }
+        },
+
+        "Client-to-Server": {
+          "Block-Publish-Endpoint": "/app/chat.sendBlock",
+          "Message-Format": {
+            "blockId": {
+              "type": "string",
+              "format": "<user Id>-<publish time Millis>",
+              "example": "123-11724079380012",
+              "description": "검열할 메시지의 ID"
+            }
+          },
+          "Authorization": {
+            "required": true,
+            "description": "검열 메시지는 관리자 권한이 있는 사용자만 보낼 수 있다. 소켓 연결 시 관리자 토큰을 쿼리 파라미터로 제공해야한다. 일반 로그인 토큰으로는 전송이 불가능하다."
+          }
+        }
+      },
+
+      "Notice-Message" : {
+        "Server-to-Client":{
+          "Notice-Subscribe-Endpoint": "/topic/notice",
+          "Message-Format": {
+            "id": {
+              "type": "string",
+              "format": "<Admin Id>-<publish time Millis>",
+              "example": "1-11724079380012",
+              "description": "관리자 ID와 메시지 생성 시간을 조합한 고유 식별자이다. 관리자 ID는 항상 '1'로 고정되어 있다. 이 필드는 시스템에서 자동으로 생성되며, 클라이언트 측에서 특별히 처리할 필요는 없다."
+            },
+            "content": {
+              "type": "string",
+              "description": "공지사항 본문. 현재는 길이 제한이 없다."
+            }
+          },
+          "Authorization": {
+            "required": false,
+            "description": "서버에서 공지사항을 수신하는 데는 인증이 불필요하다."
+          }
+        },
+
+        "Client-to-Server": {
+          "Notice-Publish-Endpoint": "/app/chat.sendNotice",
+          "Message-Format": {
+            "content": {
+              "type": "string",
+              "description": "공지사항 본문. 현재는 길이 제한이 없다."
+            }
+          },
+          "Authorization": {
+            "required": true,
+            "description": "공지사항은 관리자 권한이 있는 사용자만 보낼 수 있다. 소켓 연결 시 관리자 토큰을 쿼리 파라미터로 제공해야한다. 일반 로그인 토큰으로는 전송이 불가능하다."
+          }
+        }
+      }
+  },
+
+  "Game" : {
+    "Server-to-Client": {
+      "Game-Subscribe-Endpoint": "/topic/game",
+      "Data-Format": {
+        "example": {
+          "p": 881,
+          "t": 1017,
+          "s": 1139,
+          "l": 812
+        },
+        "description": "게임 진행 상황을 나타내는 데이터 형식이다. 각 팀의 점수를 나타내며, 팀 코드는 p, t, s, l로 구분된다. 이 데이터는 서버에서 1초마다 클라이언트로 푸시되며, 대문자가 아닌 소문자임에 주의.",
+        "Authorization": {
+          "required": false,
+          "description": "현재 게임 데이터를 수신하는 데는 인증이 불필요하다."
+        }
+      }
+    },
+
+    "Client-to-Server": {
+      "Game-Publish-Endpoint": "/app/game.sendGameData",
+      "Data-Format": {
+        "example": {
+          "p": 3,
+          "t": 0,
+          "s": 0,
+          "l": 0
+        },
+        "description": "사용자가 클릭한 버튼의 팀별 횟수를 나타내는 데이터."
+      },
+      "Authorization": {
+        "required": true,
+        "description": "게임 데이터는 정당한 토큰을 가진 로그인된 사용자만 보낼 수 있다. 토큰은 소켓 연결 시 쿼리 파라미터를 통해 제공되어야 하며, 인증된 사용자만 데이터를 전송할 수 있다."
+      }
+    }
+  }
+}
+

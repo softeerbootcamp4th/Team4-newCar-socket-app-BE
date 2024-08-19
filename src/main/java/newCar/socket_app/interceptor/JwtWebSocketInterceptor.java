@@ -52,7 +52,7 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
         // 클라이언트가 소켓을 통해 보내는 메시지에 세션 식별자를 '명시적으로' 작성하지 않아도 서버는 클라이언트를 식별할 수 있다.
         if (token != null && jwtValidator.validateToken(token)) {
             if(jwtValidator.validateAdminToken(token)){
-                attributes.put("session", new AdminSession());
+                attributes.put("session", new AdminSession(1L));
                 return true;
             }
 

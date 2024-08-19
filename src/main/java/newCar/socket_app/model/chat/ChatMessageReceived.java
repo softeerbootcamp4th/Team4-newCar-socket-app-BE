@@ -8,9 +8,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 public class ChatMessageReceived implements Serializable {
     private String content;
