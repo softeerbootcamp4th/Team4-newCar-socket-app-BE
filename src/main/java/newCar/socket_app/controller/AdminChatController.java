@@ -1,5 +1,6 @@
 package newCar.socket_app.controller;
 
+import lombok.RequiredArgsConstructor;
 import newCar.socket_app.exception.InvalidSessionException;
 import newCar.socket_app.exception.SessionNotFoundException;
 import newCar.socket_app.model.chat.BlockMessage;
@@ -11,19 +12,14 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminChatController {
 
-    @Qualifier("simpMessagePublisherService")
     private final MessagePublisherService messagePublisherService;
-
-    AdminChatController(MessagePublisherService messagePublisherService) {
-        this.messagePublisherService = messagePublisherService;
-    }
 
     @MessageMapping("/chat.sendBlock")
     public void blockMessage(
