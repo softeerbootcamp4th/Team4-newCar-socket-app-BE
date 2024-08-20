@@ -71,7 +71,7 @@ function sendMessage(event) {
         var chatMessage = {
             content: messageInput.value,
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/chat.getHistory", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();

@@ -15,6 +15,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
@@ -29,7 +30,7 @@ public class ChatController {
     //client -> /app/chat.getHistory
     @MessageMapping("/chat.getHistory")
     @SendToUser("/queue/chatHistory")
-    public BlockingQueue<ChatMessage> getHistory(
+    public ArrayList<ChatMessage> getHistory(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes
     ) {
         validateHistoryRequest(sessionAttributes);
