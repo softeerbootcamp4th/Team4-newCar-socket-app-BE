@@ -18,10 +18,10 @@ public class RedisMessageSubscriberService implements MessageListener {
         String channel = new String(pattern);
         String body = new String(message.getBody());
 
+        messagingTemplate.convertAndSend(channel, body);
+
         if(channel.equals("/topic/chat")){
             bufferedMessageService.addMessage(body);
         }
-
-        messagingTemplate.convertAndSend(channel, body);
     }
 }
