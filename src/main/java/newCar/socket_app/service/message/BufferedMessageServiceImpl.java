@@ -31,7 +31,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
     @Override
     public void addMessage(String message) {
         try {
-            log.info("message : {}", message);
+            //log.info("message : {}", message);
             ChatMessage chatMessage = objectMapper.convertValue(message, ChatMessage.class);
 
             chatMessageSaveQueue.add(chatMessage);
