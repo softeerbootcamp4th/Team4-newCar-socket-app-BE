@@ -1,5 +1,7 @@
 package newCar.socket_app.model.chat;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +29,16 @@ public class ChatMessage extends Message implements Serializable {
         chatMessage.setContent(chatMessageReceived.getContent());
 
         return chatMessage;
+    }
+
+    @JsonCreator
+    public ChatMessage(@JsonProperty("id") String id,
+                       @JsonProperty("sender") String sender,
+                       @JsonProperty("team") String team,
+                       @JsonProperty("content") String content) {
+        super(id); // 상위 클래스의 생성자 호출
+        this.sender = sender;
+        this.team = team;
+        this.content = content;
     }
 }
