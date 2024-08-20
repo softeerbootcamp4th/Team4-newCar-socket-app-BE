@@ -41,6 +41,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
                 flushBuffer();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.info(e.getMessage());
         }
     }
