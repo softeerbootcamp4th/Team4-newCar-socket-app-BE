@@ -16,8 +16,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 public class ChatMessage extends Message implements Serializable {
+    @JsonProperty("sender")
     private String sender;
+
+    @JsonProperty("team")
     private String team;
+
+    @JsonProperty("content")
     private String content;
 
     public static ChatMessage from(ChatMessageReceived chatMessageReceived, UserSession userSession) {
