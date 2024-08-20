@@ -16,6 +16,6 @@ public class Message implements Serializable {
     private String id;
 
     public void generateUniqueId(Long accountId){
-        this.id = accountId.toString() + System.currentTimeMillis();
+        this.id = accountId.toString() + "-" + System.currentTimeMillis();
     }
 }
