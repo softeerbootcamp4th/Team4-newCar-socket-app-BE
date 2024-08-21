@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class RedisMessageSubscriberService implements MessageListener {
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final BufferedMessageService bufferedMessageService;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -18,5 +19,9 @@ public class RedisMessageSubscriberService implements MessageListener {
         String body = new String(message.getBody());
 
         messagingTemplate.convertAndSend(channel, body);
+
+        if(channel.equals("/topic/chat")){
+            bufferedMessageService.addMessage(body);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package newCar.socket_app.model.chat;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 public class Message implements Serializable {
+    @JsonProperty("id")
     private String id;
 
     public void generateUniqueId(Long accountId){

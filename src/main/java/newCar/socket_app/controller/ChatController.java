@@ -2,27 +2,40 @@ package newCar.socket_app.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import newCar.socket_app.exception.ChatMessageNotFoundException;
-import newCar.socket_app.exception.InvalidChatMessageException;
-import newCar.socket_app.exception.InvalidSessionException;
-import newCar.socket_app.exception.SessionNotFoundException;
+import newCar.socket_app.exception.*;
 import newCar.socket_app.model.chat.ChatMessage;
 import newCar.socket_app.model.chat.ChatMessageReceived;
 import newCar.socket_app.model.session.UserSession;
+import newCar.socket_app.service.message.BufferedMessageService;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UserChatController {
+public class ChatController {
 
     private final MessagePublisherService messagePublisherService;
+    private final BufferedMessageService bufferedMessageService;
+
+    //client -> /app/chat.getHistory
+    @MessageMapping("/chat.getHistory")
+    @SendToUser("/queue/chatHistory")
+    public ArrayList<ChatMessage> getHistory(
+            @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes
+    ) {
+        validateHistoryRequest(sessionAttributes);
+        return bufferedMessageService.getChatMessages();
+    }
 
     // client -> /app/chat.sendMessage
     @MessageMapping("/chat.sendMessage")
@@ -36,6 +49,18 @@ public class UserChatController {
         UserSession session = (UserSession) sessionAttributes.get("session");
 
         messagePublisherService.publish("/topic/chat", ChatMessage.from(chatMessageReceived, session));
+    }
+
+    private void validateHistoryRequest(Map<String, Object> sessionAttributes) {
+        Boolean hasAlreadyRequested = (Boolean) sessionAttributes.get("hasAlreadyRequestedHistory");
+
+        if (Boolean.TRUE.equals(hasAlreadyRequested)) {
+            // 이미 요청한 경우 빈 큐를 반환하거나 오류 메시지를 전송할 수 있습니다.
+            throw new ChatHistoryAlreadyRequestedException("과거 채팅 내역 요청은 한 번만 가능합니다.");
+        } else {
+            // 아직 요청하지 않은 경우 플래그를 설정하고 채팅 히스토리를 반환
+            sessionAttributes.put("hasAlreadyRequestedHistory", true);
+        }
     }
 
     private void validateUserSession(Map<String, Object> sessionAttributes) {
