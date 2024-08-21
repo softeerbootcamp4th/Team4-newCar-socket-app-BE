@@ -31,8 +31,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
     @Override
     public void addMessage(String message) {
         try {
-            //log.info("message : {}", message);
-            ChatMessage chatMessage = objectMapper.convertValue(message, ChatMessage.class);
+            ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
 
             chatMessageSaveQueue.add(chatMessage);
             chatMessageHistory.put(chatMessage.getId(), chatMessage);
@@ -41,7 +40,6 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
                 flushBuffer();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             log.info(e.getMessage());
         }
     }
