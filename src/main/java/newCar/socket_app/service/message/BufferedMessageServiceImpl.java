@@ -37,7 +37,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
     private final BlockingQueue<ChatMessage> chatMessageBatchQueue = new LinkedBlockingQueue<>();
     private final BlockingQueue<NoticeMessage> noticeMessageBatchQueue = new LinkedBlockingQueue<>();
     private final LinkedHashMap<String, ChatMessage> chatMessageHistory = new FixedSizeCache<>(CHAT_HISTORY_SIZE);
-    private NoticeMessage recentNoticeMessage = new NoticeMessage();
+    private NoticeMessage recentNoticeMessage;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -111,7 +111,9 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
     @Override
     public ArrayList<Message> getChatHistory() {
         ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
-        history.add(recentNoticeMessage);
+        if(recentNoticeMessage != null){
+            history.add(recentNoticeMessage);
+        }
         return history;
     }
 }
