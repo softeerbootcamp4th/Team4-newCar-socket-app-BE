@@ -19,9 +19,6 @@ public class RedisMessageSubscriberService implements MessageListener {
         String body = new String(message.getBody());
 
         messagingTemplate.convertAndSend(channel, body);
-
-        if(channel.equals("/topic/chat")){
-            bufferedMessageService.addMessage(body);
-        }
+        bufferedMessageService.addMessage(channel, body);
     }
 }

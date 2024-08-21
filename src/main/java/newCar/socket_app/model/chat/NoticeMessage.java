@@ -1,5 +1,7 @@
 package newCar.socket_app.model.chat;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +15,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.NONE)
 public class NoticeMessage extends Message implements Serializable {
+    @JsonProperty("content")
     private String content;
+
+    @JsonCreator
+    public NoticeMessage(@JsonProperty("id") String id, @JsonProperty("content") String content) {
+        super(id);
+        this.content = content;
+    }
 }

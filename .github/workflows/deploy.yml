@@ -2,7 +2,7 @@ name: Deploy To EC2
 
 on:
   push:
-    branches: [ "main", "TASK-197--ChatSave" ]
+    branches: [ "main", "TASK-283--NoticeBatchStore" ]
 
 jobs:
   deploy:
