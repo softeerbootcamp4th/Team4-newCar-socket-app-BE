@@ -18,7 +18,7 @@ public class ChatMessageEntity {
 
     private String message;
 
-    public ChatMessageEntity from(ChatMessage chatMessage){
+    public static ChatMessageEntity from(ChatMessage chatMessage){
         ChatMessageEntity chatMessageEntity = new ChatMessageEntity();
         chatMessageEntity.setUserId(Long.parseLong(chatMessage.getSender()));
         chatMessageEntity.setMessage(chatMessage.getContent());

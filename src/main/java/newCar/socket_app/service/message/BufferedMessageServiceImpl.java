@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.FixedSizeCache;
 import newCar.socket_app.model.chat.ChatMessage;
+import newCar.socket_app.model.entity.ChatMessageEntity;
 import newCar.socket_app.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,7 +22,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
 
-    private final int BUFFER_SIZE = 100; // 버퍼 사이즈만큼 차면 배치 저장
+    private final int BUFFER_SIZE = 10; // 버퍼 사이즈만큼 차면 배치 저장
     private final int HISTORY_SIZE = 30;
 
     private final BlockingQueue<ChatMessage> chatMessageSaveQueue = new LinkedBlockingQueue<>();
@@ -47,7 +49,12 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
 
     @Override
     public void flushBuffer() {
+        ArrayList<ChatMessage> list = new ArrayList<>();
+        chatMessageSaveQueue.drainTo(list);
 
+        chatMessageRepository.saveAll(
+                list.stream().map(ChatMessageEntity::from).collect(Collectors.toList())
+        );
     }
 
     @Override
