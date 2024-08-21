@@ -5,19 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.exception.*;
 import newCar.socket_app.model.chat.ChatMessage;
 import newCar.socket_app.model.chat.ChatMessageReceived;
+import newCar.socket_app.model.chat.Message;
 import newCar.socket_app.model.session.UserSession;
 import newCar.socket_app.service.message.BufferedMessageService;
 import newCar.socket_app.service.message.MessagePublisherService;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
 
 @Slf4j
 @Controller
@@ -30,11 +29,11 @@ public class ChatController {
     //client -> /app/chat.getHistory
     @MessageMapping("/chat.getHistory")
     @SendToUser("/queue/chatHistory")
-    public ArrayList<ChatMessage> getHistory(
+    public ArrayList<Message> getHistory(
             @Header(name = "simpSessionAttributes") Map<String, Object> sessionAttributes
     ) {
         validateHistoryRequest(sessionAttributes);
-        return bufferedMessageService.getChatMessages();
+        return bufferedMessageService.getChatHistory();
     }
 
     // client -> /app/chat.sendMessage
