@@ -3,10 +3,10 @@ package newCar.socket_app.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FixedSizeQueue<K, V> extends LinkedHashMap<K, V> {
+public class FixedSizeCache<K, V> extends LinkedHashMap<K, V> {
     private final int maxSize;
 
-    public FixedSizeQueue(int maxSize) {
+    public FixedSizeCache(int maxSize) {
         super(maxSize, 0.75f, true);
         this.maxSize = maxSize;
     }
@@ -20,4 +20,14 @@ public class FixedSizeQueue<K, V> extends LinkedHashMap<K, V> {
     public synchronized V put(K key, V value) {
         return super.put(key, value);
     }
+
+    public V peek(){
+        if (!isEmpty()) {
+            K firstKey = entrySet().iterator().next().getKey();
+            return super.get(firstKey);
+        }
+        return null;
+    }
+
+
 }

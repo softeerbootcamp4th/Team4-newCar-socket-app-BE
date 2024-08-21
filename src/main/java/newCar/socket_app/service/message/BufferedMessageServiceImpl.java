@@ -3,7 +3,7 @@ package newCar.socket_app.service.message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import newCar.socket_app.model.FixedSizeQueue;
+import newCar.socket_app.model.FixedSizeCache;
 import newCar.socket_app.model.chat.ChatMessage;
 import newCar.socket_app.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,12 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
 
-    private final int BUFFER_SIZE = 50; // 버퍼 사이즈만큼 차면 배치 저장
+    private final int BUFFER_SIZE = 100; // 버퍼 사이즈만큼 차면 배치 저장
+    private final int HISTORY_SIZE = 30;
 
     private final BlockingQueue<ChatMessage> chatMessageSaveQueue = new LinkedBlockingQueue<>();
 
-    private final LinkedHashMap<String, ChatMessage> chatMessageHistory = new FixedSizeQueue<>(BUFFER_SIZE);
+    private final LinkedHashMap<String, ChatMessage> chatMessageHistory = new FixedSizeCache<>(HISTORY_SIZE);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
