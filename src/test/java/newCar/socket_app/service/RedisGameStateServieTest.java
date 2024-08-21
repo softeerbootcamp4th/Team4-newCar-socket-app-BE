@@ -2,7 +2,7 @@ package newCar.socket_app.service;
 
 import newCar.socket_app.model.game.GameData;
 import newCar.socket_app.model.Team;
-import newCar.socket_app.service.game.RedisGameStateManager;
+import newCar.socket_app.service.game.RedisGameStateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 
-class RedisGameStateManagerTest {
+class RedisGameStateServieTest {
     @Mock
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -23,7 +23,7 @@ class RedisGameStateManagerTest {
     private HashOperations<String, Object, Object> hashOperations;
 
     @InjectMocks
-    private RedisGameStateManager gameStateService; // 실제 테스트할 서비스 클래스
+    private RedisGameStateService gameStateService; // 실제 테스트할 서비스 클래스
 
     private final String redisGameStateKeyString = "GameState";
 
