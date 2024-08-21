@@ -17,6 +17,7 @@ public class GameData {
             case TRAVEL -> T;
             case SPACE -> S;
             case LEISURE -> L;
+            default -> null;
         };
     }
 }

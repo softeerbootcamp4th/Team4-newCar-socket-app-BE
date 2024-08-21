@@ -61,7 +61,7 @@ public class JwtValidatorImpl implements JwtValidator {
             case "TRAVEL" -> Team.TRAVEL;
             case "LEISURE" -> Team.LEISURE;
             case "SPACE" -> Team.SPACE;
-            default -> Team.PET;
+            default -> Team.NONE;
         };
     }
 

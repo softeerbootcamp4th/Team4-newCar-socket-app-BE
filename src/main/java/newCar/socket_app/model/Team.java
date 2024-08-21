@@ -9,7 +9,8 @@ public enum Team {
     PET("P"),
     TRAVEL("T"),
     SPACE("S"),
-    LEISURE("L");
+    LEISURE("L"),
+    NONE("N");
 
     private final String code;
 }

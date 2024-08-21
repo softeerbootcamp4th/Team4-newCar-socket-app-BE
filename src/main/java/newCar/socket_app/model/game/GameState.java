@@ -25,6 +25,7 @@ public class GameState implements Serializable {
             case TRAVEL -> T;
             case SPACE -> S;
             case LEISURE -> L;
+            case NONE -> P;
         };
     }
 
