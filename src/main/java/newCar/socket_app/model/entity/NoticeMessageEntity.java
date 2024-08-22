@@ -21,7 +21,7 @@ public class NoticeMessageEntity {
     public static NoticeMessageEntity from(NoticeMessage noticeMessage){
         NoticeMessageEntity noticeMessageEntity = new NoticeMessageEntity();
         noticeMessageEntity.setMessage(noticeMessage.getContent());
-        noticeMessageEntity.setTimeStamp(noticeMessage.getTimeStamp());
+        noticeMessageEntity.setTimeStamp(noticeMessage.extractTimeStamp());
         return noticeMessageEntity;
     }
 }

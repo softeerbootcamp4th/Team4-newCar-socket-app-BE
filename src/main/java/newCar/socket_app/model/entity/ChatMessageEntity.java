@@ -29,7 +29,7 @@ public class ChatMessageEntity {
         chatMessageEntity.setUserId(Long.parseLong(chatMessage.getSender()));
         chatMessageEntity.setTeam(Team.fromCode(chatMessage.getTeam()));
         chatMessageEntity.setMessage(chatMessage.getContent());
-        chatMessageEntity.setTimeStamp(chatMessage.getTimeStamp());
+        chatMessageEntity.setTimeStamp(chatMessage.extractTimeStamp());
         return chatMessageEntity;
     }
 }

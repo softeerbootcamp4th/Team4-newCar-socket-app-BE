@@ -26,7 +26,7 @@ public class Message implements Serializable {
         this.id = accountId.toString() + "-" + now.format(formatter);
     }
 
-    public String getTimeStamp(){
+    public String extractTimeStamp(){
         return id.substring(id.indexOf("-")+1);
     }
 }
