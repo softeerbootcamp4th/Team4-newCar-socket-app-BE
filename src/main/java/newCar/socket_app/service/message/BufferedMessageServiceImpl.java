@@ -1,6 +1,7 @@
 package newCar.socket_app.service.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.FixedSizeCache;
@@ -13,10 +14,14 @@ import newCar.socket_app.model.entity.NoticeMessageEntity;
 import newCar.socket_app.repository.ChatMessageRepository;
 import newCar.socket_app.repository.NoticeMessageRepository;
 import newCar.socket_app.service.DistributedLockService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Function;
@@ -27,7 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BufferedMessageServiceImpl implements BufferedMessageService {
     private final int CHAT_BATCH_TRIGGER_SIZE = 10;
-    private final int NOTICE_BATCH_TRIGGER_SIZE = 10;
+    private final int NOTICE_BATCH_TRIGGER_SIZE = 1;
     private final int CHAT_HISTORY_SIZE = 30;
     private final String BATCH_STORE_LOCK = "BATCH_STORE_LOCK";
 
@@ -59,6 +64,37 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         }
     }
 
+    @PostConstruct
+    @Override
+    public void fetchHistory() {
+        /**** Start Fetching Chat History *****/
+        Pageable pageable = PageRequest.of(0, CHAT_HISTORY_SIZE);
+
+        List<ChatMessageEntity> list = chatMessageRepository.findAllByOrderByIdDesc(pageable);
+        Collections.reverse(list);
+
+        list.stream()
+                .map(ChatMessage::from)
+                .forEach(M -> chatMessageHistory.put(M.getId(), M));
+        /**** END Fetching Chat History *****/
+
+        /**** Start Fetching Recent Notice *****/
+        NoticeMessageEntity recentNotice = noticeMessageRepository.findTopByOrderByIdDesc();
+        if(recentNotice != null) {
+            recentNoticeMessage = NoticeMessage.from(noticeMessageRepository.findTopByOrderByIdDesc());
+        }
+        /**** END Fetching Recent Notice *****/
+    }
+
+    @Override
+    public ArrayList<Message> getChatHistory() {
+        ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
+        if(recentNoticeMessage != null){
+            history.add(recentNoticeMessage);
+        } //채팅 히스토리 리스트의 마지막 원소는 최신 공지사항이다.
+        return history;
+    }
+
     private void handleChatMessage(String message){
         try {
             ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
@@ -66,14 +102,13 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
             chatMessageBatchQueue.add(chatMessage);
             chatMessageHistory.put(chatMessage.getId(), chatMessage);
 
-            if(chatMessageBatchQueue.size() > CHAT_BATCH_TRIGGER_SIZE) {
+            if(chatMessageBatchQueue.size() >= CHAT_BATCH_TRIGGER_SIZE) {
                 flushBuffer(chatMessageBatchQueue, chatMessageRepository, ChatMessageEntity::from);
             }
         } catch (Exception e) {
             log.info(e.getMessage());
         }
     }
-
     private void handleNoticeMessage(String message) {
         try {
             NoticeMessage noticeMessage = objectMapper.readValue(message, NoticeMessage.class);
@@ -81,7 +116,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
             recentNoticeMessage = noticeMessage;
             noticeMessageBatchQueue.add(noticeMessage);
 
-            if(noticeMessageBatchQueue.size() > NOTICE_BATCH_TRIGGER_SIZE) {
+            if(noticeMessageBatchQueue.size() >= NOTICE_BATCH_TRIGGER_SIZE) {
                 flushBuffer(noticeMessageBatchQueue, noticeMessageRepository, NoticeMessageEntity::from);
             }
         } catch (Exception e) {
@@ -114,12 +149,4 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         }
     }
 
-    @Override
-    public ArrayList<Message> getChatHistory() {
-        ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
-        if(recentNoticeMessage != null){
-            history.add(recentNoticeMessage);
-        } //채팅 히스토리 리스트의 마지막 원소는 최신 공지사항이다.
-        return history;
-    }
 }

@@ -16,9 +16,12 @@ public class NoticeMessageEntity {
 
     private String message;
 
+    private String timeStamp;
+
     public static NoticeMessageEntity from(NoticeMessage noticeMessage){
         NoticeMessageEntity noticeMessageEntity = new NoticeMessageEntity();
         noticeMessageEntity.setMessage(noticeMessage.getContent());
+        noticeMessageEntity.setTimeStamp(noticeMessage.extractTimeStamp());
         return noticeMessageEntity;
     }
 }

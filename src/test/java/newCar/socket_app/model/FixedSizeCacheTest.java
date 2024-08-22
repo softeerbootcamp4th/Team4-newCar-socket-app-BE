@@ -31,4 +31,5 @@ class FixedSizeCacheTest {
     public void cacheRemoveTest(){
         assertEquals(String.valueOf(LAST_VALUE - MAX_SIZE), cache.peek());
     }
+
 }
