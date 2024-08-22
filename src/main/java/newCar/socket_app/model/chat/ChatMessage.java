@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import newCar.socket_app.model.entity.ChatMessageEntity;
 import newCar.socket_app.model.session.UserSession;
 
 import java.io.Serializable;
@@ -32,6 +33,17 @@ public class ChatMessage extends Message implements Serializable {
         chatMessage.setSender(userSession.getAccountId().toString());
         chatMessage.setTeam(userSession.getTeam().getCode());
         chatMessage.setContent(chatMessageReceived.getContent());
+
+        return chatMessage;
+    }
+
+    public static ChatMessage from(ChatMessageEntity chatMessageEntity){
+        ChatMessage chatMessage = new ChatMessage();
+
+        chatMessage.setId(chatMessageEntity.getUserId() + "-" + chatMessageEntity.getTimeStamp());
+        chatMessage.setSender(chatMessageEntity.getUserId().toString());
+        chatMessage.setTeam(chatMessageEntity.getTeam().getCode());
+        chatMessage.setContent(chatMessageEntity.getMessage());
 
         return chatMessage;
     }

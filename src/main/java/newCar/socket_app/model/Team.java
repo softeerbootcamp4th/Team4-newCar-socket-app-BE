@@ -13,5 +13,14 @@ public enum Team {
     NONE("N");
 
     private final String code;
+
+    public static Team fromCode(String code) {
+        for (Team team : Team.values()) {
+            if (team.getCode().equals(code)) {
+                return team;
+            }
+        }
+        return Team.NONE;
+    }
 }
 
