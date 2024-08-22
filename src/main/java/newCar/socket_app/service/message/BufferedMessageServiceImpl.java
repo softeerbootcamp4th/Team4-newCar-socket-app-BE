@@ -102,7 +102,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
             chatMessageBatchQueue.add(chatMessage);
             chatMessageHistory.put(chatMessage.getId(), chatMessage);
 
-            if(chatMessageBatchQueue.size() > CHAT_BATCH_TRIGGER_SIZE) {
+            if(chatMessageBatchQueue.size() >= CHAT_BATCH_TRIGGER_SIZE) {
                 flushBuffer(chatMessageBatchQueue, chatMessageRepository, ChatMessageEntity::from);
             }
         } catch (Exception e) {
@@ -116,7 +116,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
             recentNoticeMessage = noticeMessage;
             noticeMessageBatchQueue.add(noticeMessage);
 
-            if(noticeMessageBatchQueue.size() > NOTICE_BATCH_TRIGGER_SIZE) {
+            if(noticeMessageBatchQueue.size() >= NOTICE_BATCH_TRIGGER_SIZE) {
                 flushBuffer(noticeMessageBatchQueue, noticeMessageRepository, NoticeMessageEntity::from);
             }
         } catch (Exception e) {
