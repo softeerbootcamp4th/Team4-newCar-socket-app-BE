@@ -12,11 +12,11 @@ import newCar.socket_app.model.entity.ChatMessageEntity;
 import newCar.socket_app.model.entity.NoticeMessageEntity;
 import newCar.socket_app.repository.ChatMessageRepository;
 import newCar.socket_app.repository.NoticeMessageRepository;
+import newCar.socket_app.service.DistributedLockService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Function;
@@ -26,19 +26,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BufferedMessageServiceImpl implements BufferedMessageService {
-
     private final int CHAT_BATCH_TRIGGER_SIZE = 10;
     private final int NOTICE_BATCH_TRIGGER_SIZE = 10;
     private final int CHAT_HISTORY_SIZE = 30;
+    private final String BATCH_STORE_LOCK = "BATCH_STORE_LOCK";
 
     private final ChatMessageRepository chatMessageRepository;
     private final NoticeMessageRepository noticeMessageRepository;
 
     private final BlockingQueue<ChatMessage> chatMessageBatchQueue = new LinkedBlockingQueue<>();
     private final BlockingQueue<NoticeMessage> noticeMessageBatchQueue = new LinkedBlockingQueue<>();
-    private final LinkedHashMap<String, ChatMessage> chatMessageHistory = new FixedSizeCache<>(CHAT_HISTORY_SIZE);
+    private final FixedSizeCache<String, ChatMessage> chatMessageHistory = new FixedSizeCache<>(CHAT_HISTORY_SIZE);
     private NoticeMessage recentNoticeMessage;
 
+    private final DistributedLockService distributedLockService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -102,10 +103,15 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         ArrayList<T> list = new ArrayList<>();
         batchQueue.drainTo(list);
 
-        //TODO 이 부분에서 Redis의 flag를 얻는 서버만 저장하도록 처리하면!!!!
-        repository.saveAll(
-                list.stream().map(converter).collect(Collectors.toList())
-        );
+        if (distributedLockService.getLock(BATCH_STORE_LOCK)){
+            try {
+                repository.saveAll(
+                        list.stream().map(converter).collect(Collectors.toList())
+                );
+            } finally {
+                distributedLockService.releaseLock(BATCH_STORE_LOCK);
+            }
+        }
     }
 
     @Override
@@ -113,7 +119,7 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
         if(recentNoticeMessage != null){
             history.add(recentNoticeMessage);
-        }
+        } //채팅 히스토리 리스트의 마지막 원소는 최신 공지사항이다.
         return history;
     }
 }

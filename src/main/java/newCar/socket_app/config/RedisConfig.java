@@ -4,6 +4,7 @@ import newCar.socket_app.service.message.RedisMessageSubscriberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
@@ -59,7 +60,7 @@ public class RedisConfig {
         return new JedisConnectionFactory(redisConfig, clientConfig);
     }
 
-    @Bean
+    @Bean @Primary
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory());
@@ -68,7 +69,7 @@ public class RedisConfig {
         return template;
     }
 
-    @Bean
+    @Bean @Primary
     public RedisTemplate<String, String> gameStateRedisTemplate() {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());

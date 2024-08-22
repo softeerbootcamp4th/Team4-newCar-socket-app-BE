@@ -2,7 +2,7 @@ name: Deploy To EC2
 
 on:
   push:
-    branches: [ "main", "TASK-283--NoticeBatchStore" ]
+    branches: [ "main", "TASK-290--DistributedServerBatchStoreImpl" ]
 
 jobs:
   deploy:

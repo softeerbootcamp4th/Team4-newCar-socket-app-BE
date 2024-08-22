@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RedisGameStateManager implements GameStateService {
+public class RedisGameStateService implements GameStateService {
 
     private final RedisTemplate<String, String> gameStateRedisTemplate;
     private final SimpMessagingTemplate messagingTemplate;
