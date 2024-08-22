@@ -79,7 +79,10 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         /**** END Fetching Chat History *****/
 
         /**** Start Fetching Recent Notice *****/
-        recentNoticeMessage = NoticeMessage.from(noticeMessageRepository.findTopByOrderByIdDesc());
+        NoticeMessageEntity recentNotice = noticeMessageRepository.findTopByOrderByIdDesc();
+        if(recentNotice != null) {
+            recentNoticeMessage = NoticeMessage.from(noticeMessageRepository.findTopByOrderByIdDesc());
+        }
         /**** END Fetching Recent Notice *****/
     }
 
