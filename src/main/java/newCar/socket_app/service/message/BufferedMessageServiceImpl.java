@@ -1,6 +1,7 @@
 package newCar.socket_app.service.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import newCar.socket_app.model.FixedSizeCache;
@@ -13,6 +14,8 @@ import newCar.socket_app.model.entity.NoticeMessageEntity;
 import newCar.socket_app.repository.ChatMessageRepository;
 import newCar.socket_app.repository.NoticeMessageRepository;
 import newCar.socket_app.service.DistributedLockService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +62,28 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         }
     }
 
+    @PostConstruct
+    @Override
+    public void fetchChatHistory() {
+        Pageable pageable = PageRequest.of(0, CHAT_HISTORY_SIZE);
+        chatMessageRepository
+                .findAllByOrderByIdDesc(pageable)
+                .stream()
+                .map(ChatMessage::from)
+                .forEach(M ->
+                        chatMessageHistory.put(M.getId(), M)
+                );
+    }
+
+    @Override
+    public ArrayList<Message> getChatHistory() {
+        ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
+        if(recentNoticeMessage != null){
+            history.add(recentNoticeMessage);
+        } //채팅 히스토리 리스트의 마지막 원소는 최신 공지사항이다.
+        return history;
+    }
+
     private void handleChatMessage(String message){
         try {
             ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
@@ -73,7 +98,6 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
             log.info(e.getMessage());
         }
     }
-
     private void handleNoticeMessage(String message) {
         try {
             NoticeMessage noticeMessage = objectMapper.readValue(message, NoticeMessage.class);
@@ -114,12 +138,4 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         }
     }
 
-    @Override
-    public ArrayList<Message> getChatHistory() {
-        ArrayList<Message> history = new ArrayList<>(chatMessageHistory.values());
-        if(recentNoticeMessage != null){
-            history.add(recentNoticeMessage);
-        } //채팅 히스토리 리스트의 마지막 원소는 최신 공지사항이다.
-        return history;
-    }
 }
