@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BufferedMessageServiceImpl implements BufferedMessageService {
     private final int CHAT_BATCH_TRIGGER_SIZE = 10;
-    private final int NOTICE_BATCH_TRIGGER_SIZE = 10;
+    private final int NOTICE_BATCH_TRIGGER_SIZE = 1;
     private final int CHAT_HISTORY_SIZE = 30;
     private final String BATCH_STORE_LOCK = "BATCH_STORE_LOCK";
 
@@ -66,7 +66,8 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
 
     @PostConstruct
     @Override
-    public void fetchChatHistory() {
+    public void fetchHistory() {
+        /**** Start Fetching Chat History *****/
         Pageable pageable = PageRequest.of(0, CHAT_HISTORY_SIZE);
 
         List<ChatMessageEntity> list = chatMessageRepository.findAllByOrderByIdDesc(pageable);
@@ -75,6 +76,11 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
         list.stream()
                 .map(ChatMessage::from)
                 .forEach(M -> chatMessageHistory.put(M.getId(), M));
+        /**** END Fetching Chat History *****/
+
+        /**** Start Fetching Recent Notice *****/
+        recentNoticeMessage = NoticeMessage.from(noticeMessageRepository.findTopByOrderByIdDesc());
+        /**** END Fetching Recent Notice *****/
     }
 
     @Override
