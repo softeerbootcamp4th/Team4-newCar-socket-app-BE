@@ -20,6 +20,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Function;
@@ -66,13 +68,13 @@ public class BufferedMessageServiceImpl implements BufferedMessageService {
     @Override
     public void fetchChatHistory() {
         Pageable pageable = PageRequest.of(0, CHAT_HISTORY_SIZE);
-        chatMessageRepository
-                .findAllByOrderByIdDesc(pageable)
-                .stream()
+
+        List<ChatMessageEntity> list = chatMessageRepository.findAllByOrderByIdDesc(pageable);
+        Collections.reverse(list);
+
+        list.stream()
                 .map(ChatMessage::from)
-                .forEach(M ->
-                        chatMessageHistory.put(M.getId(), M)
-                );
+                .forEach(M -> chatMessageHistory.put(M.getId(), M));
     }
 
     @Override
