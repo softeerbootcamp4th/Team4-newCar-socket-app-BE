@@ -20,10 +20,9 @@ public class Message implements Serializable {
     @JsonProperty("id")
     private String id;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
     public void generateUniqueId(Long accountId){
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
         this.id = accountId.toString() + "-" + now.format(formatter);
     }
 
