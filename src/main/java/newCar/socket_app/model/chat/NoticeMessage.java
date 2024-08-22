@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import newCar.socket_app.model.entity.NoticeMessageEntity;
 
 import java.io.Serializable;
 
@@ -22,5 +23,14 @@ public class NoticeMessage extends Message implements Serializable {
     public NoticeMessage(@JsonProperty("id") String id, @JsonProperty("content") String content) {
         super(id);
         this.content = content;
+    }
+
+    public static NoticeMessage from(NoticeMessageEntity entity){
+        NoticeMessage noticeMessage = new NoticeMessage();
+
+        noticeMessage.setId("1-" + entity.getTimeStamp());
+        noticeMessage.setContent(entity.getMessage());
+
+        return noticeMessage;
     }
 }
