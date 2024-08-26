@@ -13,9 +13,8 @@ Team4-newCar-socket-app-BE
 |--|--|--|--|--|--|
 | 팀장 | FE | 김보민 |  [@nimod7890](https://github.com/nimod7890)| 코딩 | <img src="https://github.com/user-attachments/assets/f2a2d74e-6c39-48ea-ab20-7665eae9be12" alt="김보민" width="100"/> |
 | 팀원 | FE | 성락현 | [@racgoo](https://github.com/racgoo) | 명상 | <img src="https://github.com/user-attachments/assets/27a3d5e6-4a37-42e4-9393-d8e353d5b11f" alt="성락현" width="100"/> |
-| 팀원 | BE | 장준하 | [@jun-ha](https://github.com/jun-ha) | 코딩 | <img src="https://github.com/user-attachments/assets/27a3d5e6-4a37-42e4-9393-d8e353d5b11f" alt="장준하" width="100"/> |
+| 팀원 | BE | 장준하 | [@jun-ha](https://github.com/jun-ha) | 코딩 | <img src="https://avatars.githubusercontent.com/u/97020820?v=4" alt="장준하" width="100"/> |
 | 팀원 | BE | 배진환 | [@bjh3311](https://github.com/bjh3311) | 서브웨이 | <img src="https://github.com/user-attachments/assets/4e55c61e-48a0-47c4-be22-9ac97b6c9f1a" alt="배진환" width="100"/>  |
-
 
 ## 시연 영상
 https://youtu.be/73tDKewWj6I?feature=shared
