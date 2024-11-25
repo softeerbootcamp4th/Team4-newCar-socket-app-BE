@@ -23,8 +23,7 @@
 </div>
 
 > _**트래픽에 효과적으로 대응**하기 위해 **web-app**과 **socket-app**으로 분리하여 개발하였습니다._  
-아래 내용은 **socket-app**을 중심으로 작성되었습니다.
-🔗[web-app 프로젝트](https://github.com/softeerbootcamp4th/Team4-newCar-web-app-BE)
+아래 내용은 **socket-app**을 중심으로 작성되었습니다.<br>🔗[web-app 프로젝트](https://github.com/softeerbootcamp4th/Team4-newCar-web-app-BE)
 
 <!--
 <img width="891" alt="캐스퍼레이싱" src="https://github.com/user-attachments/assets/fbcd0314-ec81-4211-b8e2-e878ec2d974a">
