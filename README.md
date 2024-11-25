@@ -88,16 +88,13 @@
 
 2. **서비스 분리**
 <!-- <img width="581" alt="서비스 분리" src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81"> -->
-
-<img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="50%">
+- <img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="50%">
 
 - 트래픽 특성이 다른 두 이벤트(선착순, 실시간)를 분리하여 독립적으로 오토스케일링 적용
 
 3. **Message Broker**
-
 <!-- <img width="692" alt="pub:sub" src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b"> -->
-
-<img src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b" alt="pub/sub" width="50%">
+- <img src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b" alt="pub/sub" width="50%">
 
 - Redis를 통한 **Pub/Sub 패턴** 적용. **분산 서버 환경에서 실시간 데이터 동기화**
 
