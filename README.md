@@ -4,7 +4,7 @@
 
 <img width="1710" alt="image" src="https://github.com/user-attachments/assets/47a1bdbf-b7c4-49b6-931f-47aa7af4d1ef">
 
-### ✨ **목표**
+### 🎯 **목표** 
 : 현대자동차그룹의 신차 출시를 가정한 **대고객 이벤트 페이지** 설계 및 구현.<br>고객이 신차에 흥미를 느끼고, 지속적인 관심을 가질 수 있도록 다양한 **참여형 이벤트**를 제공.
 
 ### ✨ **필수 포함 기능**
@@ -59,7 +59,7 @@
 <h2>[Socket App] 프로젝트</h2>
 </div>
 
-### ✨ **주요 목표**
+### 🎯 **주요 목표**
 1. **웹소켓을 통한 실시간 이벤트 기능 구현**
     - **캐스퍼 레이싱 게임** 및 **기대평 채팅 시스템**을 웹소켓 연결을 통해 구현한다.
 
@@ -76,13 +76,13 @@
 
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white"> <img src = "https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 
-### ✨ **백엔드 아키텍처**
+### 🛠️ **백엔드 아키텍처**  
 <div align="center">
   <img src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b" alt="아키텍처" width="60%">
 </div>
 <!-- <img width="614" alt="아키텍처이미지" src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b"> -->
 
-### 특징
+### ✨ 아키텍처 특징
 
 1. **로드 밸런싱 / 오토스케일링 및 트래픽 분산**
 
@@ -103,10 +103,6 @@
 
 ---
 
-[회의록 노션 링크](https://www.notion.so/bside/b0eb075bb2374e2e8a7dddd5ad35ea9c?v=ed0613449dab48248731f85f79a04f0f&pvs=4)
-
-[Github wiki](https://github.com/softeerbootcamp4th/Team4-newCar-FE/wiki)
-
 ## 멤버
 | 직책 | 담당 | 이름 | github id  | 취미 | |
 |--|--|--|--|--|--|
@@ -115,12 +111,11 @@
 | 팀원 | BE | 장준하 | [@jun-ha](https://github.com/jun-ha) | 코딩 | <img src="https://avatars.githubusercontent.com/u/97020820?v=4" alt="장준하" width="100"/> |
 | 팀원 | BE | 배진환 | [@bjh3311](https://github.com/bjh3311) | 서브웨이 | <img src="https://github.com/user-attachments/assets/4e55c61e-48a0-47c4-be22-9ac97b6c9f1a" alt="배진환" width="100"/>  |
 
-## 시연 영상
-https://youtu.be/73tDKewWj6I?feature=shared
+## 시연 영상 - 🔗[Youtube](https://youtu.be/73tDKewWj6I?feature=shared)
 
+## 이슈관리 - 🔗[Jira](https://softeer-4-apple.atlassian.net/jira/software/projects/TASK/boards/1)
 
-## 이슈관리 - jira
+## 회의록 - 🔗[Notion](https://www.notion.so/bside/b0eb075bb2374e2e8a7dddd5ad35ea9c?v=ed0613449dab48248731f85f79a04f0f&pvs=4)
 
-
-https://softeer-4-apple.atlassian.net/jira/software/projects/TASK/boards/1
+## 위키 - 🔗[Github wiki](https://github.com/softeerbootcamp4th/Team4-newCar-FE/wiki)
 
