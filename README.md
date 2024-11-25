@@ -78,7 +78,8 @@
 1. **서비스 분리**
 <!-- <img width="581" alt="서비스 분리" src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81"> -->
 
-|![서비스 분리 이미지](https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81)|설명|
+|<img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="40%">
+|- 트래픽 특성이 다른 두 이벤트를 분리하여 독립적으로 오토스케일링 적용|
 |:---:|:---:|
 
 2. **로드 밸런싱 / 오토스케일링 및 트래픽 분산**
