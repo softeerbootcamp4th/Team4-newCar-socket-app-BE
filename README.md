@@ -64,7 +64,9 @@
 : **대규모 트래픽**에도 안정적인 서비스를 제공할 수 있는 고가용성 아키텍처를 설계하고 구현한다.
 
 ### ✨ **아키텍처**
-![아키텍처 이미지](https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b" alt="아키텍처" width="70%">
+</div>
 <!-- <img width="614" alt="아키텍처이미지" src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b"> -->
 
 #### 특징
