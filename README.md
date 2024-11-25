@@ -89,7 +89,8 @@
 <!-- <img width="692" alt="pub:sub" src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b"> -->
 
 <img src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b" alt="pub/sub" width="50%">
-: Redis를 통한 **Pub/Sub 패턴** 적용. **분산 서버 환경에서 실시간 데이터 동기화**
+
+- Redis를 통한 **Pub/Sub 패턴** 적용. **분산 서버 환경에서 실시간 데이터 동기화**
 
 ---
 
