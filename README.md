@@ -2,6 +2,8 @@
 <h1>🚙 현대자동차그룹 신차 출시 이벤트 🚙</h1>
 </div>
 
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/47a1bdbf-b7c4-49b6-931f-47aa7af4d1ef">
+
 ### ✨ **목표**
 : 현대자동차그룹의 신차 출시를 가정한 **대고객 이벤트 페이지** 설계 및 구현.<br>고객이 신차에 흥미를 느끼고, 지속적인 관심을 가질 수 있도록 다양한 **참여형 이벤트**를 제공.
 
