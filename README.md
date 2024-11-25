@@ -67,20 +67,19 @@
 
 <br>
 
-### ✨ **아키텍처**
+### ✨ **백엔드 아키텍처**
 <div align="center">
   <img src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b" alt="아키텍처" width="60%">
 </div>
 <!-- <img width="614" alt="아키텍처이미지" src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b"> -->
 
-#### 특징
+### 특징
 
 1. **서비스 분리**
 <!-- <img width="581" alt="서비스 분리" src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81"> -->
 
-|<img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="40%">
-|- 트래픽 특성이 다른 두 이벤트를 분리하여 독립적으로 오토스케일링 적용|
-|:---:|:---:|
+<img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="40%">
+- 트래픽 특성이 다른 두 이벤트(선착순, 실시간)를 분리하여 독립적으로 오토스케일링 적용
 
 2. **로드 밸런싱 / 오토스케일링 및 트래픽 분산**
 
@@ -88,8 +87,8 @@
 
 <!-- <img width="692" alt="pub:sub" src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b"> -->
 
-![pub/sub 사진](https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b)
-: **Redis Pub/Sub**를 활용하여 **분산 서버 환경에서 실시간 데이터 동기화**
+<img src="https://github.com/user-attachments/assets/30b42256-8326-4e60-bb7a-a57089e3f96b" alt="pub/sub" width="40%">
+: Redis를 통한 **Pub/Sub 패턴** 적용. **분산 서버 환경에서 실시간 데이터 동기화**
 
 ---
 
