@@ -108,11 +108,15 @@
 | 팀원 | BE | 장준하 | [@jun-ha](https://github.com/jun-ha) | 코딩 | <img src="https://avatars.githubusercontent.com/u/97020820?v=4" alt="장준하" width="100"/> |
 | 팀원 | BE | 배진환 | [@bjh3311](https://github.com/bjh3311) | 서브웨이 | <img src="https://github.com/user-attachments/assets/4e55c61e-48a0-47c4-be22-9ac97b6c9f1a" alt="배진환" width="100"/>  |
 
-## 시연 영상 - 🔗[Youtube](https://youtu.be/73tDKewWj6I?feature=shared)
+### 시연 영상 
+- 🔗[Youtube](https://youtu.be/73tDKewWj6I?feature=shared)
 
-## 이슈관리 - 🔗[Jira](https://softeer-4-apple.atlassian.net/jira/software/projects/TASK/boards/1)
+### 이슈관리 
+- 🔗[Jira](https://softeer-4-apple.atlassian.net/jira/software/projects/TASK/boards/1)
 
-## 회의록 - 🔗[Notion](https://www.notion.so/bside/b0eb075bb2374e2e8a7dddd5ad35ea9c?v=ed0613449dab48248731f85f79a04f0f&pvs=4)
+### 회의록 
+- 🔗[Notion](https://www.notion.so/bside/b0eb075bb2374e2e8a7dddd5ad35ea9c?v=ed0613449dab48248731f85f79a04f0f&pvs=4)
 
-## 위키 - 🔗[Github wiki](https://github.com/softeerbootcamp4th/Team4-newCar-FE/wiki)
+### 위키 
+- 🔗[Github wiki](https://github.com/softeerbootcamp4th/Team4-newCar-FE/wiki)
 
