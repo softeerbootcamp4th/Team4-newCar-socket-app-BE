@@ -68,6 +68,12 @@
 
 <br>
 
+### ⛭ **기술 스택**
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> 
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+
+
 ### ✨ **백엔드 아키텍처**
 <div align="center">
   <img src="https://github.com/user-attachments/assets/bdd54eb5-da96-4838-938c-7c82fb0d820b" alt="아키텍처" width="60%">
@@ -76,14 +82,14 @@
 
 ### 특징
 
-1. **서비스 분리**
+1. **로드 밸런싱 / 오토스케일링 및 트래픽 분산**
+
+2. **서비스 분리**
 <!-- <img width="581" alt="서비스 분리" src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81"> -->
 
 <img src="https://github.com/user-attachments/assets/748acfef-1649-4d06-96f6-84c1ddcf4f81" alt="서비스 분리" width="50%">
 
 - 트래픽 특성이 다른 두 이벤트(선착순, 실시간)를 분리하여 독립적으로 오토스케일링 적용
-
-2. **로드 밸런싱 / 오토스케일링 및 트래픽 분산**
 
 3. **Message Broker**
 
